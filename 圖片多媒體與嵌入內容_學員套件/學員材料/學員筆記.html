@@ -1,0 +1,272 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>學員筆記</title><style>:root{color-scheme:light}*{box-sizing:border-box}body{font:18px/1.85 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:#17352f;background:#f3f5ef;margin:0}main{max-width:980px;margin:2rem auto;padding:2.5rem 3rem;background:#fffdf6;border-top:6px solid #ab3e27}h1{font-size:32px;line-height:1.45}h2{font-size:27px;margin-top:2.5rem;border-top:1px solid #b8c8bc;padding-top:1.2rem}h3{font-size:22px}a{color:#96371f;overflow-wrap:anywhere}p,li,td{overflow-wrap:anywhere}pre{font:15px/1.65 ui-monospace,monospace;background:#edf2ec;border-left:3px solid #7a9989;padding:16px;white-space:pre-wrap;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;font-size:16px}th,td{border:1px solid #b8c8bc;padding:10px;text-align:left;vertical-align:top}th{background:#edf2ec}code{font-family:ui-monospace,monospace}nav{margin:1em 0}a:focus-visible{outline:3px solid #ab3e27}details{margin:1rem 0}@media(max-width:700px){main{padding:1.2rem;margin:0}body{font-size:17px}h1{font-size:27px}h2{font-size:23px}table{font-size:14px}}</style></head><body><main><h1>圖片、多媒體與嵌入內容</h1>
+<p>參考時數：8 小時。沿用自己的虛構茶餐廳教學網站，保留個人內容及修改。</p>
+<h2>開始位置</h2>
+<p>沿用自己的正式網站，先保存副本。以下網頁檔案路徑以該網站根資料夾為起點；外層資料夾可以使用自己的名稱。用 VS Code 的 File &gt; Open Folder 開這個根資料夾，再從 index.html 啟動 Live Server。</p>
+<p>新增獨立練習時，在自己的工作區另建同名練習資料夾，先使用下面的骨架。如果後面的完整 body 內容已包括 h1，請用它取代骨架中的示例 h1 及註解。較小的功能片段則加入指定位置，保留其餘原有內容。完成一小段便儲存並重新載入。</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;自己的練習&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;練習主題&lt;/h1&gt;
+&lt;!-- 把本節內容加在這裏 --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>本節重點</h2>
+<ul>
+<li>圖片與文字替代</li>
+<li>聲音、影片及字幕</li>
+<li>嵌入頁與腳本辨識</li>
+<li>個人練習及保存</li>
+</ul>
+<h3>1. 圖片、多媒體與嵌入內容</h3>
+<ul>
+<li>首頁圖片</li>
+<li>可控制的播放器</li>
+<li>頁內位置說明</li>
+</ul>
+<p>本節沿用自己的茶餐廳網站，把相片、聲音和另一個網頁放進內容。想像訪客正在看餐牌：圖片幫他理解食品外觀，價錢仍需要清楚文字，影片則要讓他自己決定何時播放。我們每完成一種內容就儲存，再把效果放回自己的首頁。第一堂體驗作品繼續獨立保存。</p>
+<p>操作：在 VS Code 用 Open Folder 開啟自己的正式網站。由 index.html 啟動 Live Server，確認上節的列表及連結仍在。</p>
+<h3>2. 圖片檔與網頁的關係</h3>
+<ul>
+<li>img 指向另一個檔案</li>
+<li>src 由 HTML 所在位置起算</li>
+<li>圖片跟網站一起保存</li>
+</ul>
+<p>店舖櫥窗可以換照片，窗框本身不會變成照片。HTML 的 img 也是引用另一個圖片檔案，輸入檔名並不等於已經取得圖片。首頁與 images 資料夾放在同一層時，images/milk-tea.svg 的意思就是先進 images，再找該檔案。外層資料夾改名，這個內部關係仍然相同。</p>
+<p>操作：把學員課堂檔案內的 images 及 media 複製到自己的網站根資料夾；如已有同名素材，先保存原副本再比較。核對 milk-tea.svg 與 beef-noodles.svg 確實在 images 內。</p>
+<h3>3. img 的屬性</h3>
+<ul>
+<li>src：檔案位置</li>
+<li>alt：此圖的意思</li>
+<li>width、height：尺寸及比例</li>
+</ul>
+<p>我們逐項看這個標籤。src 負責找圖；alt 負責交代這張圖在目前內容的意思。width 和 height 的數值以 CSS 像素表示尺寸，也可協助瀏覽器預留比例。這兩張教學圖原尺寸都是 480 乘 320，所以先沿用這個比例。img 是空元素，HTML 不寫結束標籤。不要把圖片拉成與原圖不同的比例。</p>
+<pre><code class="language-html">&lt;img src=&quot;images/milk-tea.svg&quot;
+  alt=&quot;港式奶茶的教學示意圖&quot;
+  width=&quot;480&quot; height=&quot;320&quot;&gt;
+</code></pre>
+<p>操作：在 index.html 現有內容之後、body 結束前輸入這段。儲存並重新載入，對照實際檔名。</p>
+<h3>4. 替代文字的內容</h3>
+<ul>
+<li>交代圖片用途</li>
+<li>純裝飾圖片可用空 alt</li>
+<li>食品及價錢保留文字</li>
+</ul>
+<p>試想圖片暫時載入不到，訪客仍要知道這裏介紹的是奶茶。alt 寫有用的內容，比寫「圖片一」清楚。如果圖片純粹裝飾，而且附近文字已完整提供資訊，可以用空字串 alt=&quot;&quot;，讓輔助工具略過。食品的名稱和價錢應另外用文字寫出來；alt 也不應塞進一大段餐牌。</p>
+<p>操作：在自己另存的練習副本暫把 src 改為 images/missing.svg，觀察圖片失效時附近文字是否仍清楚。修正後重新載入。</p>
+<h3>5. figure 與 figcaption</h3>
+<ul>
+<li>figure：一組獨立內容</li>
+<li>figcaption：可見說明</li>
+<li>alt 與說明各有用途</li>
+</ul>
+<p>書本的插圖常常連着一行圖說。figure 把圖片與圖說組成一個整體，figcaption 則放所有人都看得到的說明。圖說可以交代食品、價錢及這是示意圖。alt 仍然描述圖片本身的重要意思，兩者不用逐字重複。figure 也可以包程式片段或圖表，並非每張圖片都一定要用。</p>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;img src=&quot;images/milk-tea.svg&quot; alt=&quot;港式奶茶示意圖&quot;
+    width=&quot;480&quot; height=&quot;320&quot;&gt;
+  &lt;figcaption&gt;港式奶茶，HK$22。教學示意圖。&lt;/figcaption&gt;
+&lt;/figure&gt;
+</code></pre>
+<p>操作：把剛才的 img 包進 figure，加入 figcaption；只改該區塊，保留原有首頁內容。</p>
+<h3>6. 圖片格式與來源</h3>
+<ul>
+<li>JPEG：常見照片</li>
+<li>PNG：可保留透明區域</li>
+<li>SVG：向量圖形</li>
+</ul>
+<p>照片通常可以用 JPEG；需要透明區域時常見 PNG；本課的 SVG 是向量示意圖。選擇格式要看內容和用途，改副檔名不會把檔案真正轉換格式。這裏先使用已準備好的原創素材，並保留來源說明。自己選圖時，要確認有使用權及保存來源，不能假設搜尋得到便可任意使用。</p>
+<p>操作：開啟 images/SOURCE.md，閱讀來源。比較兩張圖的內容，再在首頁加入乾炒牛河的 figure。</p>
+<h3>7. 圖片個人練習</h3>
+<ul>
+<li>乾炒牛河示意圖</li>
+<li>480 × 320</li>
+<li>可見名稱及 HK$58</li>
+</ul>
+<p>現在請各自加入第二張食品圖。沿用剛才 figure 的結構，但 src、alt、食品名稱和價錢要配合牛河。完成後先看畫面，再看原始碼：兩張圖是否各自說清楚內容？如果兩張圖的 alt 都寫奶茶，畫面看似正常，文字意思仍然錯。請自行修正到兩邊一致。</p>
+<p>操作：完成課堂練習第 1 題。儲存自己的首頁，重新開啟並閱讀兩個圖說。</p>
+<h3>8. 聲音的播放控制</h3>
+<ul>
+<li>audio controls</li>
+<li>使用者決定播放時間</li>
+<li>提供聲音內容說明</li>
+</ul>
+<p>手機語音訊息要按播放才聽到，網頁也可以把選擇留給訪客。audio 加 controls 後，瀏覽器提供播放和音量等控制，外觀會隨瀏覽器不同。本例只是短提示音，文字會說明它的用途；若改用有說話內容的錄音，便要提供相應逐字文字。預設不安排自動播放。</p>
+<pre><code class="language-html">&lt;audio controls src=&quot;media/chime.wav&quot;&gt;&lt;/audio&gt;
+&lt;p&gt;短提示音示範，由訪客自行播放。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;media/chime.wav&quot;&gt;開啟提示音&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<p>操作：在首頁加入音訊區，輸入以下內容並保存。按播放，核對檔案位置及裝置音量。</p>
+<h3>9. 影片與來源格式</h3>
+<ul>
+<li>video controls</li>
+<li>source 指定候選檔案</li>
+<li>type 協助辨識格式</li>
+</ul>
+<p>video 是影片播放器，source 讓同一播放器列出可用來源。瀏覽器會按自己的支援選擇，不是同時把所有來源播放。副檔名、編碼及實際檔案都會影響能否播放，因此不能只看到 .webm 就保證任何裝置都成功。本包提供一段約三秒的文字標牌影片，先在本機練習。</p>
+<pre><code class="language-html">&lt;video controls width=&quot;480&quot;&gt;
+  &lt;source src=&quot;media/lesson.webm&quot; type=&quot;video/webm&quot;&gt;
+&lt;/video&gt;
+</code></pre>
+<p>操作：在音訊之後加入影片。確認 media/lesson.webm 已經存在，由 Live Server 開啟首頁。</p>
+<h3>10. poster 與載入提示</h3>
+<ul>
+<li>poster：播放前的封面</li>
+<li>preload：載入偏好</li>
+<li>autoplay 受瀏覽器限制</li>
+</ul>
+<p>影片封面像影碟封套，只是播放前的提示，不會變成影片內容。poster 可以引用現有圖片。preload 是給瀏覽器的偏好，不能保證一定預先下載；autoplay 也可能被瀏覽器攔下。本節以 controls 及手動播放為主。若要嘗試 poster，可用已有奶茶圖，再決定這張圖是否適合影片意思。</p>
+<p>操作：在獨立練習副本的 video 加 poster=&quot;images/milk-tea.svg&quot;，比較播放前後畫面，再保留符合內容的版本。</p>
+<h3>11. 字幕檔與 track</h3>
+<ul>
+<li>WebVTT 時間區間</li>
+<li>track 指向字幕檔</li>
+<li>語言及顯示名稱</li>
+</ul>
+<p>字幕是另一個文字檔案，時間區間決定何時顯示內容。track 的 src 指向它，srclang 交代字幕語言，label 是播放器選單看到的名稱。這段影片沒有真人語音，我們用 captions 練習載入文字軌。較長影片仍要讓字幕與聲音及重要畫面資訊配合；有字幕檔不等於內容已完整。</p>
+<pre><code class="language-html">&lt;track src=&quot;media/lesson.vtt&quot; kind=&quot;captions&quot;
+  srclang=&quot;zh-Hant&quot; label=&quot;中文字幕&quot; default&gt;
+</code></pre>
+<p>操作：在 video 的 source 後、結束標籤前加入 track。由 HTTP 網址播放並在字幕選單選擇中文。</p>
+<h3>12. WebVTT 的時間</h3>
+<ul>
+<li>檔首 WEBVTT</li>
+<li>開始時間 --&gt; 結束時間</li>
+<li>字幕文字另起一行</li>
+</ul>
+<p>打開字幕檔會看到 WEBVTT，接着是空行、時間，再到字幕文字。箭嘴左右都是時間，不是檔案路徑。本片只有三秒左右，字幕的結束時間也要配合片長。改 label 只會改選單名稱；要改真正的字幕文字，必須修改 VTT。儲存後重新載入，必要時重新選取字幕。</p>
+<pre><code class="language-html">WEBVTT
+
+00:00:00.000 --&gt; 00:00:03.000
+這是課堂教學網站，沒有真實接單。
+</code></pre>
+<p>操作：用 VS Code 開啟 media/lesson.vtt，對照時間與內容。保留 WEBVTT 及空行。</p>
+<h3>13. 播放器旁的普通連結</h3>
+<ul>
+<li>連結放在播放器外</li>
+<li>另行開啟媒體</li>
+<li>文字持續可讀</li>
+</ul>
+<p>播放器裏的後備文字主要為不支援該元素的情況而設，並不保證任何播放錯誤都會把它顯示出來。因此，把普通連結和內容說明放在播放器外面，訪客便一直看得到。本節保留影片的用途文字和開啟檔案連結。遇到格式或網絡問題，使用者還有清楚的下一步。</p>
+<p>操作：在 video 後加用途說明及 media/lesson.webm 連結，完成第 2 題。不要把連結只放在 video 標籤裏面。</p>
+<h3>14. 多媒體個人操作</h3>
+<ul>
+<li>播放、暫停及字幕</li>
+<li>觀察文字軌名稱</li>
+<li>核對聲音與文字用途</li>
+</ul>
+<p>現在各自在自己的頁面按一次播放、暫停，再選字幕。影片很短，可以重播。沒有聽到聲音時先分清楚：影片原本就是無聲標牌，音訊區才有提示音。不要為了找聲音而反覆改影片 HTML。需要修正時，一次核對一個檔案路徑或設定。</p>
+<p>操作：完成練習第 2 題，把 track 的 label 改為「中文教學字幕」，在播放器外加入一句用途說明並重新開啟。</p>
+<h3>15. iframe 是頁內另一個網頁</h3>
+<ul>
+<li>src：另一份 HTML</li>
+<li>title：框架用途</li>
+<li>原頁與嵌入頁各自存在</li>
+</ul>
+<p>可以把 iframe 想成牆上的電視窗口：主頁保留自己的內容，窗口顯示另一份網頁。那份網頁仍有自己的 HTML、標題及內容。本節建立 location-preview.html，只放虛構位置說明，再把它嵌入首頁。iframe 不代表內容天然安全；來源、權限及網站政策仍然要考慮。</p>
+<p>操作：在自己網站根建立 location-preview.html，使用筆記的完整基本骨架，寫 h1「位置示意」及一段虛構地址說明。</p>
+<h3>16. 嵌入本地位置說明</h3>
+<ul>
+<li>相對 src</li>
+<li>可理解的 title</li>
+<li>明確尺寸</li>
+</ul>
+<p>首頁與位置說明頁在同一層，所以 src 直接寫檔名。title 讓使用輔助工具的人知道這個框架用來做甚麼，不能只寫 iframe 一。width 和 height 的 HTML 屬性填數字，這裏先用固定尺寸；百分比及響應式外觀會在 CSS 章處理。</p>
+<pre><code class="language-html">&lt;iframe src=&quot;location-preview.html&quot;
+  title=&quot;陳記位置示意&quot; width=&quot;480&quot; height=&quot;240&quot;
+  sandbox&gt;&lt;/iframe&gt;
+</code></pre>
+<p>操作：在首頁加入 iframe。確認獨立開 location-preview.html 與框架內看到相同位置內容。</p>
+<h3>17. sandbox 的限制</h3>
+<ul>
+<li>空 sandbox 套用限制</li>
+<li>只開需要的權限</li>
+<li>來源可信仍要判斷</li>
+</ul>
+<p>本例的子頁只有文字，不需要腳本、表單或彈出視窗，所以使用空 sandbox 即可。加入權限字樣會放寬部分限制，不應為了消除問題便全部加上。尤其不要把同來源的 allow-scripts 和 allow-same-origin 當成一般解法一起照抄。這裏理解限制的用途便足夠，外部服務的設定要按官方嵌入指示逐項判斷。</p>
+<p>操作：保留本地示範的空 sandbox。若改動後子頁空白，先獨立開啟子頁，核對路徑與 HTML。</p>
+<h3>18. 嵌入頁的普通入口</h3>
+<ul>
+<li>iframe 外保留連結</li>
+<li>清楚的連結文字</li>
+<li>相同本地檔案</li>
+</ul>
+<p>訪客可能想把位置說明獨立打開，也可能遇到嵌入限制。普通連結提供直接入口。連結放在 iframe 後面，href 與框架 src 指向同一個本地頁。這也接續上章連結的概念：文字先說明目的地，使用者才知道按下去會到哪裏。</p>
+<pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;location-preview.html&quot;&gt;
+  獨立開啟位置示意
+&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<p>操作：完成練習第 3 題，在 iframe 後加入普通連結，再按連結核對地址欄與頁面標題。</p>
+<h3>19. 外部嵌入服務</h3>
+<ul>
+<li>使用服務提供的嵌入網址</li>
+<li>內容可能限制嵌入</li>
+<li>保留普通連結</li>
+</ul>
+<p>YouTube 或地圖服務通常提供專用的嵌入網址，普通觀看網址未必可以直接放入 iframe。即使 HTML 正確，網絡、版權、登入或網站政策也可能阻止顯示。導師可以比較服務的分享選單，但課堂操作仍以已保存的本地位置頁完成。外部載入失敗時，不把它誤判為所有 HTML 都寫錯。</p>
+<h3>20. script 的角色</h3>
+<ul>
+<li>HTML 表達內容結構</li>
+<li>JavaScript 增加行為</li>
+<li>腳本可由另一檔案載入</li>
+</ul>
+<p>自動門的感應系統收到訊號才執行動作，JavaScript 也可以讓頁面回應操作。HTML 先描述標題、連結與按鈕；腳本再決定按下後發生甚麼。script 是引入程式的元素。本節只辨認檔案關係，完整變數、事件和計算留待 JavaScript 章。學員主站不需要先抄一段還未理解的計算程式。</p>
+<pre><code class="language-html">&lt;script src=&quot;script-demo.js&quot; defer&gt;&lt;/script&gt;
+</code></pre>
+<h3>21. noscript 的適用情況</h3>
+<ul>
+<li>腳本停用時的內容</li>
+<li>重要說明本來就要可讀</li>
+<li>執行錯誤要另行處理</li>
+</ul>
+<p>餐牌可以在電子系統停用時改看紙本，noscript 也提供腳本停用或不支援時的替代內容。可是腳本下載失敗、語法錯誤或計算錯誤，不會一律觸發 noscript。因此重要的地址、價錢及用途，應本來就存在 HTML 中。後續學程式時會再處理執行錯誤。</p>
+<h3>22. 本節保存位置</h3>
+<ul>
+<li>首頁及位置說明頁</li>
+<li>images 與 media</li>
+<li>自己的練習變化</li>
+</ul>
+<p>最後儲存整個網站，重新從首頁查看兩張圖片、播放器與位置窗口。請自己用一句話解釋 alt 與 figcaption 的分工，再指出字幕真正存在的檔案。下一章會把內容整理到多頁結構，所以現在先保存自己的內容和素材關係，不必把首頁重做成另一份參考作品。</p>
+<p>操作：停止再重新啟動自己的 Live Server，重開首頁。若只完成部分內容，在 plan.md 記下接續位置。</p>
+<h2>操作參考</h2>
+<h3>首頁的媒體區</h3>
+<p>將以下區塊放到自己的首頁 body 結束前。images 及 media 取自學員課堂檔案，保留相同相對位置。</p>
+<pre><code class="language-html">&lt;figure&gt;
+  &lt;img src=&quot;images/milk-tea.svg&quot; alt=&quot;港式奶茶的教學示意圖&quot; width=&quot;480&quot; height=&quot;320&quot;&gt;
+  &lt;figcaption&gt;港式奶茶，HK$22。教學示意圖。&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;多媒體示例&lt;/h2&gt;
+&lt;audio controls src=&quot;media/chime.wav&quot;&gt;&lt;/audio&gt;
+&lt;p&gt;短提示音示範，由訪客自行播放。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;media/chime.wav&quot;&gt;開啟提示音&lt;/a&gt;&lt;/p&gt;
+&lt;video controls width=&quot;480&quot;&gt;
+  &lt;source src=&quot;media/lesson.webm&quot; type=&quot;video/webm&quot;&gt;
+  &lt;track src=&quot;media/lesson.vtt&quot; kind=&quot;captions&quot; srclang=&quot;zh-Hant&quot; label=&quot;中文字幕&quot; default&gt;
+&lt;/video&gt;
+&lt;p&gt;這段無聲標牌短片用來示範播放器及字幕。&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;media/lesson.webm&quot;&gt;開啟教學影片&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;位置示意&lt;/h2&gt;
+&lt;iframe src=&quot;location-preview.html&quot; title=&quot;陳記位置示意&quot; width=&quot;480&quot; height=&quot;240&quot; sandbox&gt;&lt;/iframe&gt;
+&lt;p&gt;&lt;a href=&quot;location-preview.html&quot;&gt;獨立開啟位置示意&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<h3>位置說明頁</h3>
+<p>在網站根建立 location-preview.html，完整輸入：</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;位置示意&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;位置示意&lt;/h1&gt;&lt;p&gt;虛構示例地址：示例街 8 號。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>個人練習</h2>
+<p><a href="%E8%AA%B2%E5%A0%82%E7%B7%B4%E7%BF%92.html">課堂練習</a></p>
+</main></body></html>

@@ -1,0 +1,27 @@
+// 把積木 J1 貼在下一行
+// 積木 J1：點餐互動｜開始
+const orderButtons = document.querySelectorAll(".order-button");
+const lastItem = document.querySelector("#last-item");
+const itemCount = document.querySelector("#item-count");
+const totalPrice = document.querySelector("#total-price");
+
+let count = 0;
+let total = 0;
+
+orderButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const card = button.closest(".menu-card");
+    const name = card.querySelector("h3").textContent;
+    const priceText = card.querySelector(".item-price").textContent;
+    const price = Number(priceText.replace("$", ""));
+
+    count = count + 1;
+    total = total + price;
+
+    lastItem.textContent = name;
+    itemCount.textContent = count;
+    totalPrice.textContent = `$${total}`;
+  });
+});
+// 積木 J1：點餐互動｜結束
+

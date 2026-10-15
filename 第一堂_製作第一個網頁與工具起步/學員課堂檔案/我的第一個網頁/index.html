@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="第一堂：寫網頁就像砌積木">
+  <title>我的第一個網頁</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+
+<body>
+  <main class="site-shell">
+    <p class="starter-message">準備開始：請按導師指示加入第一塊積木。</p>
+
+    <!-- 把積木 H1 貼在下一行 -->
+    <!-- 積木 H1：店舖招牌｜開始 -->
+    <header class="shop-header">
+      <p class="eyebrow">本日精選</p>
+      <h1>我的茶記</h1>
+      <p>一份熟悉的港式滋味，陪伴每一天。</p>
+    </header>
+    <!-- 積木 H1：店舖招牌｜結束 -->
+
+
+    <!-- 把積木 H2 貼在下一行 -->
+    <!-- 積木 H2：餐牌與訂單｜開始 -->
+    <section class="menu-section" aria-labelledby="menu-title">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">茶記餐牌</p>
+          <h2 id="menu-title">人氣推介</h2>
+        </div>
+        <span>共 3 款</span>
+      </div>
+
+      <div class="menu-grid">
+        <article class="menu-card">
+          <img src="images/pineapple-bun.svg" alt="菠蘿油插畫" width="320" height="240">
+          <div class="menu-card__body">
+            <h3>招牌菠蘿油</h3>
+            <p>酥脆外層配厚切牛油</p>
+            <div class="menu-card__footer">
+              <strong class="item-price">$22</strong>
+              <button class="order-button" type="button">加入</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <img src="images/beef-noodles.svg" alt="乾炒牛河插畫" width="320" height="240">
+          <div class="menu-card__body">
+            <h3>乾炒牛河</h3>
+            <p>河粉配牛肉、芽菜與香蔥</p>
+            <div class="menu-card__footer">
+              <strong class="item-price">$58</strong>
+              <button class="order-button" type="button">加入</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="menu-card">
+          <img src="images/lemon-tea.svg" alt="檸檬茶插畫" width="320" height="240">
+          <div class="menu-card__body">
+            <h3>招牌熱檸茶</h3>
+            <p>新鮮檸檬配香濃紅茶</p>
+            <div class="menu-card__footer">
+              <strong class="item-price">$20</strong>
+              <button class="order-button" type="button">加入</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="order-summary" aria-labelledby="order-title" aria-live="polite">
+      <div>
+        <p class="eyebrow">畫面即時更新</p>
+        <h2 id="order-title">我的訂單</h2>
+      </div>
+      <dl>
+        <div>
+          <dt>剛加入</dt>
+          <dd id="last-item">尚未選擇</dd>
+        </div>
+        <div>
+          <dt>總件數</dt>
+          <dd id="item-count">0</dd>
+        </div>
+        <div>
+          <dt>總額</dt>
+          <dd id="total-price">$0</dd>
+        </div>
+      </dl>
+      <p class="demo-note">課堂示範網站</p>
+    </section>
+    <!-- 積木 H2：餐牌與訂單｜結束 -->
+
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>學員筆記</title><style>:root{color-scheme:light}*{box-sizing:border-box}body{font:18px/1.85 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:#17352f;background:#f3f5ef;margin:0}main{max-width:980px;margin:2rem auto;padding:2.5rem 3rem;background:#fffdf6;border-top:6px solid #ab3e27}h1{font-size:32px;line-height:1.45}h2{font-size:27px;margin-top:2.5rem;border-top:1px solid #b8c8bc;padding-top:1.2rem}h3{font-size:22px}a{color:#96371f;overflow-wrap:anywhere}p,li,td{overflow-wrap:anywhere}pre{font:15px/1.65 ui-monospace,monospace;background:#edf2ec;border-left:3px solid #7a9989;padding:16px;white-space:pre-wrap;overflow-wrap:anywhere}table{border-collapse:collapse;width:100%;font-size:16px}th,td{border:1px solid #b8c8bc;padding:10px;text-align:left;vertical-align:top}th{background:#edf2ec}code{font-family:ui-monospace,monospace}nav{margin:1em 0}a:focus-visible{outline:3px solid #ab3e27}details{margin:1rem 0}@media(max-width:700px){main{padding:1.2rem;margin:0}body{font-size:17px}h1{font-size:27px}h2{font-size:23px}table{font-size:14px}}</style></head><body><main><h1>資料表格</h1>
+<p>參考時數：6 小時。沿用自己的虛構茶餐廳教學網站，保留個人內容及修改。</p>
+<h2>開始位置</h2>
+<p>沿用自己的正式網站，先保存副本。以下網頁檔案路徑以該網站根資料夾為起點；外層資料夾可以使用自己的名稱。用 VS Code 的 File &gt; Open Folder 開這個根資料夾，再從 index.html 啟動 Live Server。</p>
+<p>新增獨立練習時，在自己的工作區另建同名練習資料夾，先使用下面的骨架。如果後面的完整 body 內容已包括 h1，請用它取代骨架中的示例 h1 及註解。較小的功能片段則加入指定位置，保留其餘原有內容。完成一小段便儲存並重新載入。</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;自己的練習&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;練習主題&lt;/h1&gt;
+&lt;!-- 把本節內容加在這裏 --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>本節重點</h2>
+<ul>
+<li>行列及表頭</li>
+<li>營業時間表實作</li>
+<li>合併儲存格</li>
+<li>個人練習及保存</li>
+</ul>
+<h3>1. 資料表格</h3>
+<ul>
+<li>同一組欄位</li>
+<li>每行一筆資料</li>
+<li>營業時間的對照</li>
+</ul>
+<p>想像我們只看到一串 07:00、20:00，並不知道哪個是開店時間。表格用行和欄交代關係，讓訪客把日期、開店及關店對在一起。本節把位置頁的營業時間整理成資料表，稍後再練習合併儲存格。表格的用途是表達資料關係，網站版面排列會用 CSS。</p>
+<p>操作：開啟自己的 location.html，找出營業時間的位置，先保存副本。</p>
+<h3>2. table、tr、th、td</h3>
+<ul>
+<li>table：整個表格</li>
+<li>tr：一行</li>
+<li>th 表頭、td 資料</li>
+</ul>
+<p>試算表裏每一行有一組資料，HTML 也用 tr 表達一行。th 是標題儲存格，td 是一般資料儲存格。標題可能放在上方，也可能放在左邊，因此不能只把第一行全部當 th、其餘全部當 td 而不看意思。日期名稱在本例就是每行的表頭。</p>
+<p>操作：在筆記中逐個指出一行的開始與結束，再數它有三個格。</p>
+<h3>3. caption 的表格名稱</h3>
+<ul>
+<li>直接放在 table 內</li>
+<li>交代表格主題</li>
+<li>與欄標題分開</li>
+</ul>
+<p>報表上面的「營業時間」讓人知道整份表在說甚麼，caption 就負責這個名稱。欄標題「日期」則只說明某一欄，兩者用途不同。把 caption 放在 table 裏，表格離開附近段落時仍有自己的名稱。本例的資料是虛構教學內容，要在名稱或附近文字清楚交代。</p>
+<pre><code class="language-html">&lt;table&gt;
+  &lt;caption&gt;營業時間（虛構示例）&lt;/caption&gt;
+&lt;/table&gt;
+</code></pre>
+<p>操作：在 location.html 先建立 table 與 caption，再依序加入表頭和資料。</p>
+<h3>4. thead 與 tbody</h3>
+<ul>
+<li>thead：表頭區</li>
+<li>tbody：主要資料</li>
+<li>每行對準相同欄位</li>
+</ul>
+<p>一份報表的標題列跟資料列可以分區管理，thead 與 tbody 就表達這種結構。它們不會自動替你計算或補齊資料。這個表有日期、開店和關店三欄，每一行都必須對準。如果少了一個 td，後面的值便可能出現在錯誤位置，不應用空格或 br 補回。</p>
+<p>操作：按筆記完整範例輸入三欄表，再從左至右讀出星期一至五的一整行。</p>
+<h3>5. scope 指出表頭方向</h3>
+<ul>
+<li>scope=&quot;col&quot;：欄標題</li>
+<li>scope=&quot;row&quot;：行標題</li>
+<li>讀出資料與表頭的關係</li>
+</ul>
+<p>查字典時要知道自己在哪一欄、哪一行。scope 指出表頭適用的方向，協助工具理解資料關係。上方的開店和關店用 col，左邊的星期名稱用 row。本節把關係寫清楚，即使畫面沒有格線，也仍然保留結構。複雜多層表頭可能需要其他方法，先把簡單表做好。</p>
+<pre><code class="language-html">&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;日期&lt;/th&gt;
+  &lt;th scope=&quot;col&quot;&gt;開店&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;關店&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;星期一至五&lt;/th&gt;
+  &lt;td&gt;07:00&lt;/td&gt;&lt;td&gt;20:00&lt;/td&gt;&lt;/tr&gt;
+</code></pre>
+<p>操作：核對每個 th 的內容，再加對應的 scope。</p>
+<h3>6. 表格的外觀</h3>
+<ul>
+<li>預設可能沒有格線</li>
+<li>資料關係仍然存在</li>
+<li>樣式在 CSS 章處理</li>
+</ul>
+<p>如果你現在看不到像試算表的框線，先不要判定 HTML 失效。瀏覽器的預設表格本來可以很簡單。查看表頭、每行內容及資料位置，比只看外框重要。不要為了畫線而加入舊式 border、cellpadding 等版面屬性；之後會用 CSS 統一設定。</p>
+<p>操作：由 Live Server 開啟位置頁，對照三欄文字，放大畫面閱讀。</p>
+<h3>7. 新增公眾假期一行</h3>
+<ul>
+<li>新增一個 tr</li>
+<li>日期用 th scope=&quot;row&quot;</li>
+<li>沿用 07:00 至 20:00</li>
+</ul>
+<p>新增資料時，先複製一個完整 tr 的結構，再改成公眾假期。每行仍是日期、開店和關店，所以不要因文字長短而增減格數。完成後指着公眾假期的 20:00，能清楚說出它是該行的關店時間。這就是表格關係的用途。</p>
+<p>操作：完成練習第 1 題，將新行放在 tbody 裏，儲存並重新載入。</p>
+<h3>8. tfoot 的摘要</h3>
+<ul>
+<li>總結或表尾資訊</li>
+<li>保持欄位結構</li>
+<li>數字不會自動計算</li>
+</ul>
+<p>試算表的最下方可能有合計或摘要，HTML 可以用 tfoot 表達這部分。可是 tfoot 不會替我們做運算，總額仍要自己提供或由程式計算。本例只放一段營業時間說明。若這段橫跨整行三欄，就要明確寫 colspan=&quot;3&quot;。</p>
+<pre><code class="language-html">&lt;tfoot&gt;
+  &lt;tr&gt;&lt;td colspan=&quot;3&quot;&gt;時間只作課堂示例。&lt;/td&gt;&lt;/tr&gt;
+&lt;/tfoot&gt;
+</code></pre>
+<p>操作：在 tbody 後加入 tfoot，確認結束標籤仍在 table 內。</p>
+<h3>9. colspan 橫跨欄位</h3>
+<ul>
+<li>一格佔多欄</li>
+<li>先數完整欄數</li>
+<li>同一行避免重疊</li>
+</ul>
+<p>試算表的橫向合併，可以把一個格延伸到旁邊。colspan 也表示這個格佔多少欄，數字包含原來那一欄。三欄表的一個 colspan=&quot;3&quot; 已經用滿整行，後面再加 td 就會多出一欄。先在紙上畫三格並圈出合併範圍，再看 HTML，比逐個試數字清楚。</p>
+<p>操作：在自己的筆記畫三欄，核對表尾只需要一個橫跨三欄的 td。</p>
+<h3>10. rowspan 向下跨行</h3>
+<ul>
+<li>下一行少寫已被佔用的格</li>
+<li>避免跨越列群組</li>
+<li>先畫格子再輸入</li>
+</ul>
+<p>rowspan 讓同一格向下佔多行。假設早餐這個名稱要配兩款食品，第一行寫 rowspan=&quot;2&quot;，下一行便不要再多寫早餐那一格，因為位置已經被佔用。合併應留在同一個 tbody 等列群組內。這一段使用獨立練習，避免把不需要合併的營業時間表變複雜。</p>
+<p>操作：在獨立 table-practice.html 的 main 內輸入筆記的兩行早餐表；先用紙格對照每行位置。</p>
+<h3>11. 分組表頭的方向</h3>
+<ul>
+<li>colgroup 定義欄組</li>
+<li>rowgroup 對應列群組</li>
+<li>合併保留可理解關係</li>
+</ul>
+<p>有些報表會把兩個欄位合在同一個大標題下。這時不能只靠外觀猜關係，欄組要有 colgroup，合併表頭可用 scope=&quot;colgroup&quot;；多行共用的表頭可配合 tbody 列群組使用 rowgroup。這些適合清楚的分組表格，過度複雜時應先考慮拆成幾個簡單表。</p>
+<h3>12. 四欄表的調整</h3>
+<ul>
+<li>新增備註欄</li>
+<li>各資料行同步加格</li>
+<li>表尾 colspan 改為 4</li>
+</ul>
+<p>如果想加一欄備註，不只改表頭便完成。每一筆資料都要提供對應格，表尾如果原本橫跨整行，也要改為四欄。請依次從 thead、tbody 到 tfoot 核對，保持每行的有效欄數一致。備註可以簡短，但不要靠少寫一個 td 來表示沒有內容。</p>
+<p>操作：完成練習第 2 題，在四欄版本加入「備註」，並把表尾 colspan 改為 4。</p>
+<h3>13. 合併個人練習</h3>
+<ul>
+<li>兩行早餐資料</li>
+<li>早餐表頭只寫一次</li>
+<li>畫出每格的範圍</li>
+</ul>
+<p>現在各自完成兩行早餐的 rowspan 練習。第一行是早餐、奶茶、22，第二行是已被早餐表頭佔住的位置、菠蘿包、18。第二行的 HTML 因此只需寫食品和價錢兩個格。完成後用手指由左至右讀，確認没有食品跑到價錢欄。</p>
+<p>操作：完成第 3 題，在同一 tbody 使用 rowspan=&quot;2&quot; 的早餐表頭及兩筆食品資料。</p>
+<h3>14. 錯位的排查次序</h3>
+<ul>
+<li>逐行數有效欄數</li>
+<li>檢查跨欄及跨行</li>
+<li>核對開關標籤</li>
+</ul>
+<p>表格錯位時，先看哪一行開始偏移，再計算該行每個格佔多少欄。遇到 rowspan，要把上行已佔住的位置算進去。接着才查缺少的結束標籤。瀏覽器有時會修補錯誤結構，畫面沒有破裂也不代表原始碼正確。改完後再次讀出資料對應的表頭。</p>
+<p>操作：在練習副本暫把 colspan 改错，觀察差異，再按紙格恢復。</p>
+<h3>15. 本節保存位置</h3>
+<ul>
+<li>位置頁營業時間</li>
+<li>獨立合併練習</li>
+<li>清楚的表頭及資料</li>
+</ul>
+<p>本節主站保留容易閱讀的營業時間表，額外合併練習保存在自己的練習資料夾。請自己指出一個 th、一個 td 及它們的關係，再解釋三欄改四欄時為甚麼表尾也要更改。下一章會在聯絡頁加入讓訪客輸入資料的表單。</p>
+<p>操作：儲存位置頁及獨立練習，重新開啟一次；保留五頁導覽與其他素材。</p>
+<h2>表格實作參考</h2>
+<p>在 location.html 的 main 裏加入營業時間表，保留本來的導覽與位置說明：</p>
+<pre><code class="language-html">&lt;table&gt;
+  &lt;caption&gt;營業時間（虛構示例）&lt;/caption&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;日期&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;開店&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;關店&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;星期一至五&lt;/th&gt;&lt;td&gt;07:00&lt;/td&gt;&lt;td&gt;20:00&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;星期六、日&lt;/th&gt;&lt;td&gt;07:00&lt;/td&gt;&lt;td&gt;20:00&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+  &lt;tfoot&gt;&lt;tr&gt;&lt;td colspan=&quot;3&quot;&gt;時間只作課堂示例。&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
+&lt;/table&gt;
+</code></pre>
+<p>另建 table-practice.html，使用完整骨架，把兩行早餐表放進 body。先畫出三欄和兩行再輸入：</p>
+<pre><code class="language-html">&lt;table&gt;
+  &lt;caption&gt;早餐食品（虛構示例）&lt;/caption&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;時段&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;食品&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;價錢&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th scope=&quot;rowgroup&quot; rowspan=&quot;2&quot;&gt;早餐&lt;/th&gt;&lt;td&gt;港式奶茶&lt;/td&gt;&lt;td&gt;HK$22&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;td&gt;菠蘿包&lt;/td&gt;&lt;td&gt;HK$18&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<h3>分組表頭比較</h3>
+<p>閱讀這個兩層表頭，colgroup 的欄數與表頭覆蓋範圍對應：</p>
+<pre><code class="language-html">&lt;table&gt;
+  &lt;caption&gt;兩間示例分店的營業時間&lt;/caption&gt;
+  &lt;colgroup span=&quot;1&quot;&gt;&lt;/colgroup&gt;&lt;colgroup span=&quot;2&quot;&gt;&lt;/colgroup&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;&lt;th scope=&quot;col&quot; rowspan=&quot;2&quot;&gt;分店&lt;/th&gt;&lt;th scope=&quot;colgroup&quot; colspan=&quot;2&quot;&gt;營業時間&lt;/th&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;開店&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;關店&lt;/th&gt;&lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;&lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;示例分店甲&lt;/th&gt;&lt;td&gt;07:00&lt;/td&gt;&lt;td&gt;20:00&lt;/td&gt;&lt;/tr&gt;&lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+<h2>個人練習</h2>
+<p><a href="%E8%AA%B2%E5%A0%82%E7%B7%B4%E7%BF%92.html">課堂練習</a></p>
+</main></body></html>

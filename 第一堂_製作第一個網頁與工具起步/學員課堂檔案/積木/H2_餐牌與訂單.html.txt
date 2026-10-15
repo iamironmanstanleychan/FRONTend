@@ -1,0 +1,62 @@
+<!-- 積木 H2：餐牌與訂單｜開始 -->
+<section class="menu-section" aria-labelledby="menu-title">
+  <div class="section-heading">
+    <div>
+      <p class="eyebrow">茶記餐牌</p>
+      <h2 id="menu-title">人氣推介</h2>
+    </div>
+    <span>共 3 款</span>
+  </div>
+
+  <div class="menu-grid">
+    <article class="menu-card">
+      <img src="images/pineapple-bun.svg" alt="菠蘿油插畫" width="320" height="240">
+      <div class="menu-card__body">
+        <h3>招牌菠蘿油</h3>
+        <p>酥脆外層配厚切牛油</p>
+        <div class="menu-card__footer">
+          <strong class="item-price">$22</strong>
+          <button class="order-button" type="button">加入</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="menu-card">
+      <img src="images/beef-noodles.svg" alt="乾炒牛河插畫" width="320" height="240">
+      <div class="menu-card__body">
+        <h3>乾炒牛河</h3>
+        <p>河粉配牛肉、芽菜與香蔥</p>
+        <div class="menu-card__footer">
+          <strong class="item-price">$58</strong>
+          <button class="order-button" type="button">加入</button>
+        </div>
+      </div>
+    </article>
+
+    <article class="menu-card">
+      <img src="images/lemon-tea.svg" alt="檸檬茶插畫" width="320" height="240">
+      <div class="menu-card__body">
+        <h3>招牌凍檸茶</h3>
+        <p>新鮮檸檬配香濃紅茶</p>
+        <div class="menu-card__footer">
+          <strong class="item-price">$20</strong>
+          <button class="order-button" type="button">加入</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="order-summary" aria-labelledby="order-title" aria-live="polite">
+  <div>
+    <p class="eyebrow">畫面即時更新</p>
+    <h2 id="order-title">我的訂單</h2>
+  </div>
+  <dl>
+    <div><dt>剛加入</dt><dd id="last-item">尚未選擇</dd></div>
+    <div><dt>總件數</dt><dd id="item-count">0</dd></div>
+    <div><dt>總額</dt><dd id="total-price">$0</dd></div>
+  </dl>
+  <p class="demo-note">課堂示範網站</p>
+</section>
+<!-- 積木 H2：餐牌與訂單｜結束 -->

@@ -1,0 +1,165 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>學員筆記</title><style>:root{color-scheme:light}*{box-sizing:border-box}body{font:18px/1.8 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:#17352f;background:#f3f5ef;margin:0}main{max-width:960px;margin:2rem auto;padding:2.5rem 3rem;background:#fffdf6;border-top:6px solid #ab3e27}h1{font-size:32px;line-height:1.45}h2{font-size:26px;margin-top:2.4rem;padding-top:1rem;border-top:1px solid #b8c8bc}h3{font-size:22px}a{color:#96371f;overflow-wrap:anywhere}p,li,td{overflow-wrap:anywhere}pre{font:15px/1.6 ui-monospace,monospace;padding:16px;background:#edf2ec;border-left:3px solid #7a9989;white-space:pre-wrap;overflow-wrap:anywhere}code{font-family:ui-monospace,monospace}table{border-collapse:collapse;width:100%;font-size:16px}th,td{text-align:left;padding:10px;border-bottom:1px solid #b8c8bc;vertical-align:top}th{background:#edf2ec}@media(max-width:700px){main{padding:1.2rem;margin:0}body{font-size:17px}h1{font-size:26px}h2{font-size:23px}table{font-size:14px}}</style></head><body><main><h1>Web 檔案、路徑與有效 HTML 文檔</h1>
+<p>本節會整理自己的首頁骨架，分辨分頁標題和頁內標題，再以兩個獨立網頁練習相對路徑。完成後，你可以指出每一部分的用途，並把整個作品資料夾搬到另一位置繼續使用。</p>
+<h2>先找到自己的檔案</h2>
+<p>沿用上一節的正式練習資料夾，一般名稱為 <code>chan-kee-practice</code>；如已改名，以你實際保存的資料夾為準。它應有自己的 <code>index.html</code> 和 <code>plan.md</code>。用 VS Code 的 <strong>File → Open Folder</strong> 開啟它；本節提到「正式練習根目錄」就是這一層。保留自己的首頁文字和網站規劃。</p>
+<p>課堂套件中的「學員課堂檔案」提供操作說明。你的正式練習可以放在另一位置，最外層名稱亦可按需要更改；操作時以正在開啟的工作資料夾為起點。有檔案找不到時，請導師協助定位原作。</p>
+<p>每次切換作品，先停止舊位置的 Live Server，再用 <strong>Open Folder</strong> 開啟正確資料夾，最後從新位置啟動 Live Server。看清楚檔案樹頂部的資料夾名稱，避免仍在預覽另一份同名檔案。</p>
+<h2>1. 網頁、網站與瀏覽器</h2>
+<p>網頁是瀏覽器可以呈現的一份文件；網站通常由一組相關網頁和資源組成。可以把網頁想成書中的一頁，把網站想成整本書。一本書有多頁，網站也可以有首頁、餐牌和聯絡頁；小型網站亦可以只有一頁。</p>
+<p>Chrome 等瀏覽器負責讀取和呈現網頁。開啟網絡上的頁面時，瀏覽器向伺服器要求內容，接收 HTML 及相關資源，再組織成畫面。本節用 Live Server 從自己的電腦提供檔案；HTML 可以引用另外儲存的圖片、樣式和程式。</p>
+<p>HTML 是 <strong>HyperText Markup Language（超文本標記語言）</strong>。「超文本」表示內容可透過連結互相連接；「標記」表示用標籤描述內容的用途。HTML 處理內容結構，CSS 處理外觀，JavaScript 處理互動。本節先把 HTML 結構寫清楚。</p>
+<h2>2. 標籤、元素與屬性</h2>
+<pre><code class="language-html">&lt;p&gt;歡迎來到陳記茶餐廳。&lt;/p&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+</code></pre>
+<p>第一行中，<code>&lt;p&gt;</code> 是開始標籤，<code>&lt;/p&gt;</code> 是結束標籤，中間是內容，整組是一個段落元素。第二行是 <code>html</code> 的開始標籤：<code>lang</code> 是屬性名稱，<code>&quot;zh-Hant&quot;</code> 是值，用來表示主要語言為繁體中文。它不是一份完整網頁。</p>
+<p>屬性寫在開始標籤內；本節統一以引號包住值，多個屬性用空格分隔。</p>
+<h2>3. 看懂一份完整的 HTML</h2>
+<p>以下是正式練習根目錄 <code>index.html</code> 的參考骨架。先與自己的檔案比較，補上缺少的部分；保留原有個人文字及 <code>plan.md</code>。</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;首頁｜陳記茶餐廳&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;陳記茶餐廳&lt;/h1&gt;
+  &lt;p&gt;港式日常滋味，從一杯奶茶開始。&lt;/p&gt;
+  &lt;p&gt;課堂示範網站&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<table>
+<thead>
+<tr>
+<th>部分</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&lt;!doctype html&gt;</code></td>
+<td>宣告使用現代 HTML 的標準模式</td>
+</tr>
+<tr>
+<td><code>html</code></td>
+<td>文件的根元素，包住 <code>head</code> 和 <code>body</code></td>
+</tr>
+<tr>
+<td><code>lang=&quot;zh-Hant&quot;</code></td>
+<td>指明主要語言，協助讀屏及語言處理</td>
+</tr>
+<tr>
+<td><code>head</code></td>
+<td>放文件資料及設定</td>
+</tr>
+<tr>
+<td><code>meta charset=&quot;utf-8&quot;</code></td>
+<td>宣告文字編碼；檔案亦要以 UTF-8 儲存</td>
+</tr>
+<tr>
+<td><code>meta name=&quot;viewport&quot;</code></td>
+<td>設定手機等裝置的版面視窗寬度及初始縮放</td>
+</tr>
+<tr>
+<td><code>title</code></td>
+<td>文件標題，會出現在瀏覽器分頁等位置</td>
+</tr>
+<tr>
+<td><code>body</code></td>
+<td>放頁面的主要內容</td>
+</tr>
+<tr>
+<td><code>h1</code>、<code>p</code></td>
+<td>分別表示本頁主標題及一段文字</td>
+</tr>
+</tbody></table>
+<p><code>lang</code> 不會把文字翻譯成中文，也不代替文字編碼。<code>viewport</code> 是後續響應式版面的基礎設定，實際排版仍要配合 CSS。</p>
+<h3>親自修改首頁</h3>
+<ol>
+<li>核對自己的 <code>index.html</code> 只有一套 <code>html</code>、<code>head</code>、<code>body</code>，補齊上面的文件設定。本節練習完整寫出它們的開始及結束標籤。</li>
+<li>把 <code>title</code> 改為「首頁｜陳記茶餐廳」，儲存。從這個正式練習資料夾以 Live Server 開啟 <code>index.html</code>，看瀏覽器分頁。</li>
+<li>保留 <code>h1</code> 的「陳記茶餐廳」，在 <code>body</code> 內加入歡迎段落和「課堂示範網站」。若已有相同句子便保留，不重複加入；個人補充文字亦保留。</li>
+<li>確認分頁標題和頁內主標題各有自己的內容；中文清楚顯示。</li>
+<li>在 <code>body</code> 內再加一段自己的營業特色，儲存並重新查看。</li>
+</ol>
+<h3>元素的內外次序</h3>
+<pre><code class="language-html">&lt;p&gt;本店的&lt;strong&gt;招牌奶茶&lt;/strong&gt;即叫即沖。&lt;/p&gt;
+</code></pre>
+<p><code>strong</code> 表示內容的重要性。這裏它放在段落裏面，要先結束 <code>strong</code>，再結束外層 <code>p</code>。縮排方便閱讀，不能代替標籤。</p>
+<p>另開一個自己的「文檔練習」資料夾，把目前的 <code>index.html</code> 複製進去，再在副本加入上述一段。以該資料夾為根開啟副本，核對字句和內外次序；正式練習保留原作。</p>
+<p><code>meta</code> 屬於 void element（空元素），不用也不能加 <code>&lt;/meta&gt;</code>。本節統一寫 <code>&lt;meta charset=&quot;utf-8&quot;&gt;</code>。網頁能顯示，不代表原始標籤完全正確：瀏覽器有時會補足或修復結構，所以仍要回到 VS Code 核對。</p>
+<h2>4. 檔案位置與相對路徑</h2>
+<p>另建立「路徑練習」資料夾，與正式練習分開。用 <strong>File → Open Folder</strong> 開啟它；以下位置均以「路徑練習」為根：</p>
+<pre><code class="language-text">路徑練習/
+├── index.html
+└── pages/
+    └── info.html
+</code></pre>
+<p>本節的 HTML 沒有另設網址基準。相對路徑從目前 HTML 所在資料夾出發：</p>
+<table>
+<thead>
+<tr>
+<th>寫在哪個檔案</th>
+<th>連到哪裏</th>
+<th><code>href</code> 的寫法</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>index.html</code></td>
+<td>進入 <code>pages</code> 找說明頁</td>
+<td><code>pages/info.html</code></td>
+</tr>
+<tr>
+<td><code>pages/info.html</code></td>
+<td>返回上一層找首頁</td>
+<td><code>../index.html</code></td>
+</tr>
+</tbody></table>
+<p>連結使用 <code>&lt;a href=&quot;目的位置&quot;&gt;連結文字&lt;/a&gt;</code>；本節只用它觀察位置，下一章再學連結的其他用法。<code>../</code> 表示上一層，路徑中的 <code>/</code> 分開每一層資料夾。</p>
+<h3>輸入兩個檔案</h3>
+<p>在「路徑練習」根目錄新增 <code>index.html</code>：</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;路徑示範&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;根目錄首頁&lt;/h1&gt;
+  &lt;p&gt;&lt;a href=&quot;pages/info.html&quot;&gt;開啟子資料夾說明頁&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>新增 <code>pages</code> 資料夾，再在其內新增 <code>info.html</code>：</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;子資料夾說明&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;說明頁&lt;/h1&gt;
+  &lt;p&gt;&lt;a href=&quot;../index.html&quot;&gt;返回上一層首頁&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<ol>
+<li>儲存兩檔，從「路徑練習」以 Live Server 開啟根目錄的 <code>index.html</code>。</li>
+<li>按「開啟子資料夾說明頁」，再按「返回上一層首頁」。留意網址末段和 VS Code 的檔案樹。</li>
+<li>在 <code>pages/info.html</code> 暫時把 <code>../index.html</code> 改成 <code>index.html</code>，儲存，再從首頁進入說明頁並按返回。這時會尋找根目錄之下的 <code>pages/index.html</code>；該檔案並不存在。</li>
+<li>在 VS Code 恢復 <code>../index.html</code> 並儲存。若瀏覽器仍留在錯誤頁，先返回上一頁，或重新開啟根目錄首頁，再重新走兩個方向。</li>
+</ol>
+<p>若路徑不正確，先找目前的 HTML，再按每一段路徑找目的檔案。檔名和路徑的大小寫必須一致；不能依賴某部電腦碰巧接受不同大小寫。</p>
+<h2>5. 搬移、保存及接續</h2>
+<p>同一作品的內部連結採相對路徑。搬移或改名時，把整個作品資料夾連同內部檔案帶走，保持它們的相對位置。只搬一個 HTML，或單獨改內層檔名，便可能需要修改連結。</p>
+<ol>
+<li>關閉「路徑練習」的 Live Server，把整個資料夾複製到另一個自己可寫的位置；可把最外層改名為「我的路徑練習」。</li>
+<li>用 <strong>Open Folder</strong> 開啟新副本，重新啟動 Live Server，再由首頁走到說明頁及返回。重新開啟可避免誤看舊位置。</li>
+<li>用 <strong>Open Folder</strong> 返回自己的正式練習；在 <code>plan.md</code> 末尾加入「內部檔案採可搬移相對路徑，大小寫一致。」。若已經有同樣意思的句子便保留。</li>
+<li>保存正式練習的 <code>index.html</code> 和 <code>plan.md</code>。下一章從它們接續；「文檔練習」及「路徑練習」另行保存。</li>
+</ol>
+<p>完成前，自己指出 <code>head</code>、<code>body</code>、<code>title</code>、<code>h1</code> 和兩個連結的用途，再做 <a href="%E8%AA%B2%E5%A0%82%E7%B7%B4%E7%BF%92.md">課堂練習</a>。</p>
+</main></body></html>

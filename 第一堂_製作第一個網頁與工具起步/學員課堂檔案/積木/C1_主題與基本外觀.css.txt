@@ -1,0 +1,52 @@
+/* 積木 C1：主題與基本外觀｜開始 */
+:root {
+  --brand: #08786c;
+  /* 可選主色：莓果色 #a53f78｜海藍色 #246b91｜奶茶啡 #76513a */
+  --accent: #a53f78;
+  --cream: #ffffff;
+  --paper: #ffffff;
+  --text: #243238;
+  --muted: #52646a;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  background: #edf8f5;
+  color: var(--text);
+  font-family: "PingFang TC", system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+button { font: inherit; }
+button:focus-visible { outline: 4px solid #243238; outline-offset: 3px; }
+img { display: block; width: 100%; }
+.starter-message { display: none; }
+
+.order-button {
+  background: var(--accent);
+  color: white;
+}
+
+.site-shell {
+  width: min(1100px, calc(100% - 32px));
+  margin: 32px auto;
+  overflow: hidden;
+  border-radius: 24px;
+  background: var(--cream);
+  border: 1px solid #cfe6e0;
+}
+
+.shop-header {
+  padding: 42px 32px;
+  background: var(--brand);
+  color: white;
+  text-align: center;
+}
+
+.shop-header h1 { margin: 4px 0 8px; font-size: clamp(38px, 7vw, 68px); }
+.shop-header p { margin: 0; }
+.eyebrow { margin: 0; font-size: 14px; font-weight: 800; letter-spacing: .12em; }
+/* 積木 C1：主題與基本外觀｜結束 */

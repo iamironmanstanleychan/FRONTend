@@ -1,0 +1,37 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>課堂練習</title><style>:root{color-scheme:light}*{box-sizing:border-box}body{font:18px/1.8 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:#17352f;background:#f3f5ef;margin:0}main{max-width:960px;margin:2rem auto;padding:2.5rem 3rem;background:#fffdf6;border-top:6px solid #ab3e27}h1{font-size:32px;line-height:1.45}h2{font-size:26px;margin-top:2.4rem;padding-top:1rem;border-top:1px solid #b8c8bc}h3{font-size:22px}a{color:#96371f;overflow-wrap:anywhere}p,li,td{overflow-wrap:anywhere}pre{font:15px/1.6 ui-monospace,monospace;padding:16px;background:#edf2ec;border-left:3px solid #7a9989;white-space:pre-wrap;overflow-wrap:anywhere}code{font-family:ui-monospace,monospace}table{border-collapse:collapse;width:100%;font-size:16px}th,td{text-align:left;padding:10px;border-bottom:1px solid #b8c8bc;vertical-align:top}th{background:#edf2ec}@media(max-width:700px){main{padding:1.2rem;margin:0}body{font-size:17px}h1{font-size:26px}h2{font-size:23px}table{font-size:14px}}</style></head><body><main><h1>Web 檔案、路徑與有效 HTML 文檔｜課堂練習</h1>
+<p>各自完成以下操作。可翻閱 <a href="%E5%AD%B8%E5%93%A1%E7%AD%86%E8%A8%98.md">學員筆記</a> 的完整骨架和兩頁程式。每次切換資料夾後，都確認 VS Code 檔案樹頂部是正在處理的作品。</p>
+<h2>練習一：首頁與自己的文字</h2>
+<p>位置：自己的正式練習根目錄 <code>index.html</code>。</p>
+<ol>
+<li>找出文件宣告、根元素、文件設定及頁面內容，補齊缺少的部分。</li>
+<li>讓分頁顯示「首頁｜陳記茶餐廳」，頁內主標題顯示「陳記茶餐廳」。</li>
+<li>在 <code>body</code> 新增一段自己的營業特色，例如介紹早餐、午市或飲品。原有個人內容保留。</li>
+<li>儲存後在瀏覽器重新查看：兩個標題位置清楚、段落出現、中文正常。</li>
+<li>在自己的「文檔練習」副本，用 <code>strong</code> 標示一段文字中的重要內容，核對內層先結束、外層後結束。</li>
+</ol>
+<p>完成後，向導師指出改 <code>title</code> 和改 <code>h1</code> 分別影響哪個位置。</p>
+<h2>練習二：多一個說明頁</h2>
+<p>位置：「路徑練習」根目錄下的 <code>pages/help.html</code>。</p>
+<ol>
+<li>確認已有根目錄 <code>index.html</code> 和 <code>pages/info.html</code>，並能來回開啟。</li>
+<li>把 <code>pages/info.html</code> 複製成同一層的 <code>pages/help.html</code>。</li>
+<li>把新檔的 <code>title</code> 改為「使用說明」，<code>h1</code> 改為「使用說明頁」。保留返回上一層首頁的連結。</li>
+<li>在根目錄 <code>index.html</code> 的 <code>body</code> 內另加一行：</li>
+</ol>
+<pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;pages/help.html&quot;&gt;開啟使用說明&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<ol start="5">
+<li>儲存兩檔。由首頁按「開啟使用說明」，確認看到新標題，再按返回首頁。</li>
+<li>用自己的話說明：為何首頁需要 <code>pages/help.html</code>，說明頁返回卻需要 <code>../index.html</code>？</li>
+</ol>
+<h2>練習三：換位置後繼續用</h2>
+<p>關閉 Live Server，把整個「路徑練習」複製到另一個可寫位置，可自行改最外層資料夾名稱。從新位置 Open Folder、開啟 Live Server，由首頁分別進入兩個說明頁並返回。保留內部 <code>pages</code> 名稱和各檔相對位置。</p>
+<p>返回正式練習，在 <code>plan.md</code> 留下相對路徑的使用原則；保留原本的規劃。最後保存三個作品資料夾，下一章開啟正式練習繼續。</p>
+<h2>自己核對</h2>
+<ul>
+<li>我能從程式指出頁面設定和可見內容。</li>
+<li>我改過的個人段落已保存，<code>plan.md</code> 的原有內容仍在。</li>
+<li>首頁能開啟 <code>info.html</code> 和 <code>help.html</code>，兩頁都能返回首頁。</li>
+<li>我已從新位置開啟搬移副本，並知道 <code>../</code> 從哪裏出發。</li>
+</ul>
+</main></body></html>

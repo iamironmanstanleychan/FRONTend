@@ -1,0 +1,208 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>學員筆記</title><style>:root{color-scheme:light}*{box-sizing:border-box}body{font:18px/1.8 -apple-system,BlinkMacSystemFont,"PingFang TC",sans-serif;color:#17352f;background:#f3f5ef;margin:0}main{max-width:960px;margin:2rem auto;padding:2.5rem 3rem;background:#fffdf6;border-top:6px solid #ab3e27}h1{font-size:32px;line-height:1.45}h2{font-size:26px;margin-top:2.4rem;padding-top:1rem;border-top:1px solid #b8c8bc}h3{font-size:22px}a{color:#96371f;overflow-wrap:anywhere}p,li,td{overflow-wrap:anywhere}pre{font:15px/1.6 ui-monospace,monospace;padding:16px;background:#edf2ec;border-left:3px solid #7a9989;white-space:pre-wrap;overflow-wrap:anywhere}code{font-family:ui-monospace,monospace}table{border-collapse:collapse;width:100%;font-size:16px}th,td{text-align:left;padding:10px;border-bottom:1px solid #b8c8bc;vertical-align:top}th{background:#edf2ec}@media(max-width:700px){main{padding:1.2rem;margin:0}body{font-size:17px}h1{font-size:26px}h2{font-size:23px}table{font-size:14px}}</style></head><body><main><h1>文字、列表、連結與基本導覽</h1>
+<p>本節整理文字的層次、用列表表達內容關係，再把首頁和餐廳簡介連起來。完成後，你能選用合適的文字及列表元素，並沿着連結到達指定頁面或段落。</p>
+<h2>開始前先找對資料夾</h2>
+<p>從原來的保存位置，用 VS Code 的 File → Open Folder 開啟自己的正式練習，一般名為 <code>chan-kee-practice</code>；如已改名，以實際名稱為準。保留上一節的 <code>index.html</code>、<code>plan.md</code> 和個人內容。本節主線只補充首頁，並新增或補充 <code>about.html</code>。</p>
+<p>另在你自己的可寫位置建立 <code>文字列表練習</code> 和 <code>連結練習</code> 兩個資料夾。每次轉換作品，以 Open Folder 開啟相應資料夾，停止舊位置的 Live Server，再從新位置啟動。這兩個練習與正式作品分開保存。</p>
+<p>以下檔案位置都相對於正在操作的資料夾；搬移作品時，整個資料夾一起搬，保留裏面的層次。不要把新範例整頁覆蓋自己的正式作品。</p>
+<h2>一、文字有層次，也有用途</h2>
+<h3>標題與段落</h3>
+<p>標題像報告的題目及分節：<code>h1</code> 表示本頁主題，<code>h2</code> 表示主要分節，<code>h3</code> 表示分節中的小題；層級可延續至 <code>h6</code>。按內容關係選用，不必用齊六級。本節每頁用一個清楚的 <code>h1</code>，其餘標題按層次安排。文字大小稍後可用 CSS 調整。</p>
+<pre><code class="language-html">&lt;h1&gt;陳記茶餐廳&lt;/h1&gt;
+&lt;h2&gt;食品介紹&lt;/h2&gt;
+&lt;h3&gt;主食&lt;/h3&gt;
+&lt;p&gt;供應熟悉的港式主食。&lt;/p&gt;
+&lt;h3&gt;飲品&lt;/h3&gt;
+&lt;p&gt;提供冷熱飲品。&lt;/p&gt;
+</code></pre>
+<p><code>p</code> 是一段完整意思。一般顯示方式下，原始碼中的 Enter 和連續空白不會原樣變成畫面換行；兩個不同意思可分成兩個 <code>p</code>。同一段中確有換行需要，例如地址，才用 <code>br</code>。不要用空白段落或一連串 <code>br</code> 推開版面。</p>
+<pre><code class="language-html">&lt;p&gt;歡迎光臨陳記茶餐廳。&lt;/p&gt;
+&lt;p&gt;課堂地址示例：&lt;br&gt;示範街 8 號&lt;br&gt;地下 A 舖&lt;/p&gt;
+</code></pre>
+<p>本節把 <code>p</code> 的結束標籤寫清楚。不要把 <code>h2</code>、<code>ul</code> 或另一個 <code>p</code> 放進 <code>p</code>；瀏覽器可能提早結束該段。<code>br</code> 本身是空元素，沒有 <code>&lt;/br&gt;</code>。</p>
+<h3>重要、語氣、引用與程式文字</h3>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>選用原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>strong</code></td>
+<td>內容重要，例如重要提示</td>
+</tr>
+<tr>
+<td><code>em</code></td>
+<td>語氣上的強調</td>
+</tr>
+<tr>
+<td><code>blockquote</code></td>
+<td>獨立的一段引用，並用文字交代來源</td>
+</tr>
+<tr>
+<td><code>code</code></td>
+<td>程式片段或程式中的名稱</td>
+</tr>
+<tr>
+<td><code>pre</code></td>
+<td>保留文字的空格及換行，常與 <code>code</code> 配合</td>
+</tr>
+</tbody></table>
+<pre><code class="language-html">&lt;p&gt;&lt;strong&gt;課堂示範網站&lt;/strong&gt;，內容只供練習。&lt;/p&gt;
+&lt;p&gt;請選擇&lt;em&gt;你需要的&lt;/em&gt;資料。&lt;/p&gt;
+&lt;blockquote&gt;&lt;p&gt;從一杯奶茶開始。&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;引用來源：本節的示例宣傳句。&lt;/p&gt;
+&lt;p&gt;主標題使用 &lt;code&gt;h1&lt;/code&gt;。&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;h1&amp;gt;陳記茶餐廳&amp;lt;/h1&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+<p>最後一行顯示程式文字，不會建立第二個主標題；<code>&amp;lt;</code> 顯示小於號，<code>&amp;gt;</code> 顯示大於號。<code>pre</code> 裏的 HTML 特殊字元仍需適當處理。</p>
+<h3>自己動手：建立文字練習</h3>
+<p>在 <code>文字列表練習</code> 建立 <code>index.html</code>，輸入以下骨架，再把上面的文字範例依次放入 <code>body</code>。儲存後用 Live Server 開啟。保留一個 <code>h1</code>，將示例宣傳句改成自己的句子，並在來源文字寫明是自訂句子。</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;文字與列表練習&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h2>二、選擇合適的列表</h2>
+<h3>沒有必要先後次序：<code>ul</code> 與 <code>li</code></h3>
+<p>購物清單中的項目通常可以調換位置而不影響意思。這類清單用 <code>ul</code>，每項放在一個 <code>li</code>。不要自行在項目前打圓點。</p>
+<pre><code class="language-html">&lt;h2&gt;本店特色&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;港式主食&lt;/li&gt;
+  &lt;li&gt;冷熱飲品&lt;/li&gt;
+  &lt;li&gt;日常輕食&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h3>次序有意思：<code>ol</code> 與 <code>li</code></h3>
+<p>步驟、排名等內容可用 <code>ol</code>。瀏覽器產生編號，不必在項目文字再打 <code>1.</code>、<code>2.</code>。</p>
+<pre><code class="language-html">&lt;h2&gt;了解餐廳的次序&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;閱讀食物介紹&lt;/li&gt;
+  &lt;li&gt;查看位置及營業時間&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<p>需要接續前文編號時，可使用整數 <code>start</code>。下面從 5 開始，接着是 6；一般從第一步開始的流程毋須加入這個屬性。</p>
+<pre><code class="language-html">&lt;ol start=&quot;5&quot;&gt;
+  &lt;li&gt;核對資料&lt;/li&gt;
+  &lt;li&gt;儲存文件&lt;/li&gt;
+&lt;/ol&gt;
+</code></pre>
+<h3>大類下面再分類：巢狀列表</h3>
+<p>把次列表放在所屬的 <code>li</code> 裏面，再結束這個 <code>li</code>。縮排方便人閱讀，真正決定關係的是標籤的位置。</p>
+<pre><code class="language-html">&lt;ul&gt;
+  &lt;li&gt;飲品
+    &lt;ul&gt;
+      &lt;li&gt;熱奶茶&lt;/li&gt;
+      &lt;li&gt;凍檸茶&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;主食&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<h3>名稱和解釋成對出現：<code>dl</code>、<code>dt</code>、<code>dd</code></h3>
+<p><code>dt</code> 寫名稱，<code>dd</code> 寫對應說明，整組放在 <code>dl</code>。像詞典的詞語與解釋，也可用於餐牌規則。同一名稱可以有多段說明。</p>
+<pre><code class="language-html">&lt;dl&gt;
+  &lt;dt&gt;熱飲&lt;/dt&gt;
+  &lt;dd&gt;按餐牌基本價錢計算。&lt;/dd&gt;
+  &lt;dt&gt;凍飲&lt;/dt&gt;
+  &lt;dd&gt;適用飲品在基本價錢上加 HK$3。&lt;/dd&gt;
+&lt;/dl&gt;
+</code></pre>
+<p>在 <code>文字列表練習/index.html</code> 的 <code>body</code> 結束前加入這些列表。把飲品次列表改成自己選的兩項，再說明為何它適合放在「飲品」裏面。額外試把 <code>start=&quot;5&quot;</code> 改成 <code>start=&quot;0&quot;</code>，觀察第一項編號，完成後改回 5。</p>
+<h2>三、補充自己的正式首頁</h2>
+<p>切回正式練習資料夾。保留 <code>index.html</code> 的完整骨架及自己的內容，只補缺少的項目：</p>
+<ol>
+<li>一個 <code>h1</code> 主題「陳記茶餐廳」，加上 <code>id=&quot;top&quot;</code>。</li>
+<li>兩段簡介：「港式日常滋味，從一杯奶茶開始。」及「課堂示範網站」。</li>
+<li>本店特色的 <code>h2</code> 和 <code>ul</code>。</li>
+<li>了解餐廳次序的 <code>h2</code> 和 <code>ol</code>。</li>
+<li>熱飲／凍飲的 <code>dl</code> 說明。</li>
+<li>以下推薦食品，留待連結使用。</li>
+</ol>
+<pre><code class="language-html">&lt;h2 id=&quot;food-intro&quot;&gt;推薦食品&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;乾炒牛河：HK$58&lt;/li&gt;
+  &lt;li&gt;港式奶茶：HK$22&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+<p>已有同一內容就調整原位置，避免重複貼上。巢狀列表和編號變化保留在獨立練習。完成後，首頁應能分辨主題、主要段落及三類列表；<code>plan.md</code> 保留原有規劃。</p>
+<h2>四、把文字連到目的地</h2>
+<p><code>a</code> 的內容是讀者看到的連結文字，<code>href</code> 是目的地。寫「閱讀餐廳簡介」比單寫「按此」清楚。</p>
+<pre><code class="language-html">&lt;a href=&quot;about.html&quot;&gt;閱讀餐廳簡介&lt;/a&gt;
+</code></pre>
+<h3>同一資料夾的頁面</h3>
+<p>正式練習內的結構：</p>
+<pre><code class="language-text">chan-kee-practice/
+  index.html
+  about.html
+  plan.md
+</code></pre>
+<p>在正式練習新增 <code>about.html</code>。如果檔案已存在，先保留副本，在原檔補上簡介與返回連結，不要整頁覆寫。</p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;簡介｜陳記茶餐廳&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;餐廳簡介&lt;/h1&gt;
+  &lt;p&gt;陳記供應熟悉的港式餐點，陪伴街坊的日常。&lt;/p&gt;
+  &lt;p&gt;&lt;a href=&quot;index.html&quot;&gt;返回首頁&lt;/a&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p>首頁 <code>body</code> 結束前加入以下連結。儲存兩個檔案，再由首頁前往簡介及返回首頁。</p>
+<pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;about.html&quot;&gt;閱讀餐廳簡介&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<h3>同一頁的指定位置</h3>
+<p>先在目標元素加上 <code>id</code>，再用 <code>#</code> 加該值。<code>id</code> 在同一頁內必須唯一，連結中的大小寫也要一致。本節用簡短英文字母及連字號，例如 <code>food-intro</code>。</p>
+<pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;#food-intro&quot;&gt;前往推薦食品&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#top&quot;&gt;返回頁頂&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<p>將這兩行放在首頁 <code>body</code> 結束前。短頁可能沒有明顯捲動畫面；可觀察網址是否加上 <code>#food-intro</code> 或 <code>#top</code>，並核對目標確實存在。</p>
+<h3>另一頁的指定位置</h3>
+<p>在 <code>about.html</code> 加入以下連結。「檔名」決定哪一頁，「# 後面的值」決定該頁的位置。</p>
+<pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;index.html#food-intro&quot;&gt;查看首頁推薦食品&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<h2>五、其他連結用途</h2>
+<p>以下在獨立的 <code>連結練習</code> 操作。先沿用本節的 HTML 骨架建立 <code>index.html</code>，將 <code>title</code> 和 <code>body</code> 內的 <code>h1</code> 設為「連結練習」，再把各例子放入 <code>body</code>。</p>
+<h3>外部網站及新分頁</h3>
+<p>外部網站使用完整網址。本地作品的頁面與檔案則使用相對路徑。</p>
+<pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-TW/docs/Web/HTML&quot;&gt;閱讀 HTML 說明&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://developer.mozilla.org/zh-TW/docs/Web/HTML&quot;
+      target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;HTML 說明（另開分頁）&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<p><code>target=&quot;_blank&quot;</code> 請瀏覽器開啟新的瀏覽環境，通常是新分頁，也可能是新視窗；連結文字先告知讀者。<code>rel=&quot;noopener&quot;</code> 明示不讓新頁透過 opener 存取來源頁。沒有需要時，維持一般同頁前往即可。</p>
+<h3>電郵及電話</h3>
+<p><code>mailto:</code> 可交給已設定的電郵程式撰寫郵件，<code>tel:</code> 可交給支援通話的程式。它們不保證在每台電腦啟動相同程式，也不等於已寄信或撥通電話。本節只辨認寫法；以下是佔位範例，毋須加入作品或啟動。</p>
+<pre><code class="language-text">mailto:info@example.com
+tel:+852XXXXXXXX
+</code></pre>
+<h3>下載一個真正存在的檔案</h3>
+<p>在 <code>連結練習</code> 裏新增 <code>notes.txt</code>，以 UTF-8 儲存以下文字：</p>
+<pre><code class="language-text">陳記茶餐廳｜課堂示例
+港式奶茶：HK$22
+此檔案用來練習下載連結。
+</code></pre>
+<p>同一資料夾的 <code>index.html</code> 加入：</p>
+<pre><code class="language-html">&lt;p&gt;&lt;a href=&quot;notes.txt&quot; download=&quot;餐廳資訊.txt&quot;&gt;下載餐廳資訊（文字檔）&lt;/a&gt;&lt;/p&gt;
+</code></pre>
+<p><code>href</code> 指向真實來源 <code>notes.txt</code>；<code>download</code> 的值建議下載檔名。透過 Live Server 開啟頁面後按連結，查看下載結果並開啟檔案，核對剛才的三行內容。瀏覽器或伺服器設定可能影響行為；只寫 <code>download</code> 不會產生檔案，也不保證外部網站資源可以下載。</p>
+<h2>六、走完整條路線，再保存</h2>
+<p>回到正式作品，用 Tab 找到連結，再按 Enter 開啟；用 Shift + Tab 往回移動。保持瀏覽器原有的焦點提示，並確認每個連結文字可說明目的地。</p>
+<ul>
+<li>首頁 → 餐廳簡介 → 首頁。</li>
+<li>首頁 → 推薦食品 → 頁頂。</li>
+<li>簡介 → 首頁推薦食品。</li>
+</ul>
+<p>若路線不通，先核對檔案是否儲存、連結文字與引號、檔案名稱和大小寫、相對位置，以及 <code>id</code> 是否存在且唯一。不要用自己電腦的磁碟位置修補連結。</p>
+<p>完成後保存三個作品資料夾。可複製整個正式練習資料夾、改外層名稱，再從新位置以 VS Code 開啟和啟動 Live Server，重走上述路線。成功後保留原作及新副本，清楚記下接續使用哪一個。</p>
+<p>本節的內容對應學員筆記 v6 第 2.3、2.4 的核心主題；<code>id</code> 定位亦與 2.13 的相關部分相連。</p>
+</main></body></html>

@@ -1,0 +1,76 @@
+/* 積木 C2：餐牌卡與訂單｜開始 */
+.menu-section { padding: 32px; }
+
+.section-heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.section-heading h2 { margin: 2px 0 0; font-size: 30px; }
+.section-heading span { color: var(--muted); font-weight: 700; }
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.menu-card {
+  overflow: hidden;
+  border: 1px solid #cfe6e0;
+  border-radius: 18px;
+  background: var(--paper);
+  box-shadow: 0 8px 24px rgba(34, 62, 52, .08);
+}
+
+.menu-card img { aspect-ratio: 4 / 3; object-fit: cover; }
+.menu-card__body { padding: 18px; }
+.menu-card h3 { margin: 0; font-size: 21px; }
+.menu-card p { min-height: 52px; margin: 6px 0 16px; color: var(--muted); }
+
+.menu-card__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.menu-card__footer strong { font-size: 22px; }
+
+.order-button {
+  min-width: 76px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.order-button:hover { filter: brightness(.9); }
+
+.order-summary {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 22px;
+  padding: 28px 32px 32px;
+  background: #edf8f5;
+}
+
+.order-summary h2 { margin: 2px 0 0; font-size: 28px; }
+.order-summary dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 0; }
+.order-summary dl div { padding: 14px; border-radius: 12px; background: white; }
+.order-summary dt { color: var(--muted); font-size: 13px; font-weight: 700; }
+.order-summary dd { margin: 3px 0 0; font-size: 20px; font-weight: 900; }
+.demo-note { grid-column: 1 / -1; margin: 0; color: var(--muted); font-size: 13px; }
+
+@media (max-width: 760px) {
+  .site-shell { width: min(100% - 20px, 560px); margin: 10px auto; }
+  .shop-header, .menu-section, .order-summary { padding: 24px 18px; }
+  .menu-grid, .order-summary { grid-template-columns: 1fr; }
+  .order-summary dl { grid-template-columns: 1fr 1fr; }
+  .order-summary dl div:first-child { grid-column: 1 / -1; }
+}
+/* 積木 C2：餐牌卡與訂單｜結束 */
