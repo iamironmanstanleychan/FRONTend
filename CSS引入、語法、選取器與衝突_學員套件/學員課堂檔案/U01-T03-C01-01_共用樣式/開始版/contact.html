@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>聯絡與查詢｜陳記茶餐廳</title>
+
+</head>
+<body>
+<header><p class="brand">陳記茶餐廳</p>
+<nav aria-label="主要導覽">
+<ul>
+<li><a href="index.html">首頁</a></li>
+<li><a href="about.html">簡介</a></li>
+<li><a href="menu.html">食物介紹</a></li>
+<li><a href="location.html">位置</a></li>
+<li><a href="contact.html" aria-current="page">聯絡</a></li>
+</ul>
+</nav></header>
+<main>
+<h1>聯絡與查詢</h1>
+<h2>課堂查詢區</h2><p>示例電郵：hello@example.invalid</p><p>這個位址不提供真實服務，請勿輸入個人資料。</p>
+<p id="form-help">填好後按按鈕，頁面會重新載入。</p>
+<form id="enquiry-form" action="contact.html" method="get" aria-describedby="form-help">
+  <p><label for="customer-name">稱呼</label>
+  <input id="customer-name" name="customerName" type="text" required maxlength="40"></p>
+  <p><label for="customer-email">電郵</label>
+  <input id="customer-email" name="email" type="email" required></p>
+  <p><label for="enquiry-type">查詢類別</label>
+  <select id="enquiry-type" name="enquiryType" required>
+    <option value="">請選擇</option>
+    <option value="menu">餐牌資料</option>
+    <option value="hours">營業時間</option>
+  </select></p>
+  <p><label for="message">查詢內容</label>
+  <textarea id="message" name="message" rows="5" required minlength="10" maxlength="300"></textarea></p>
+  <button type="submit">檢查格式（本機示範）</button>
+</form>
+</main>
+<footer><p>課堂示範網站</p></footer>
+</body>
+</html>

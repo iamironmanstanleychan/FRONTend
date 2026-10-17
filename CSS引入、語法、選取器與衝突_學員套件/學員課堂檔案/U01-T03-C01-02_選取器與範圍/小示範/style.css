@@ -1,0 +1,3 @@
+nav a { color: #08786c; }
+nav > a { color: red; }
+.note.recommended { border: 2px solid #a53f78; }

@@ -1,0 +1,42 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CSS 引入、語法、選取器與衝突｜課堂練習</title><style>*{box-sizing:border-box}body{margin:28px auto;padding:0 20px;max-width:980px;font:17px/1.75 system-ui,sans-serif;color:#233b35;background:#fffdf7;overflow-wrap:anywhere}h1{font-size:clamp(1.65rem,5vw,2.2rem);line-height:1.35}h2{margin-top:2rem}h3{margin-top:1.6rem}a{color:#8b3e25;text-underline-offset:3px}nav{display:flex;flex-wrap:wrap;gap:10px 24px;margin:20px 0}pre{background:#172c28;color:#eef8f2;padding:18px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}code{font-size:.92em}p code,li code{background:#e7eee8;padding:2px 4px;border-radius:3px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #c5d2c8;padding:8px;text-align:left}img,video{max-width:100%}@media(max-width:480px){body{padding:0 14px;font-size:16px}pre{padding:12px}}</style></head><body><nav><a href="../學員入口.html">學員入口</a></nav><h1>課堂練習</h1>
+<p>以下每題對應學員筆記同編號的「小變化」，是同一項練習。獨立完成並保留自己的修改；需要起點時先另複製開始版。除註明小示範外，檔案路徑以自己的網站根資料夾為起點。</p>
+<h2>練習 1｜一份 CSS，五頁共用</h2>
+<p>把五頁共用的 .brand 文字色改為 #08786c，保留標題及其他連結的規則。</p>
+<h3>操作</h3>
+<ol>
+<li>在 css/site.css 找到 .brand。</li>
+<li>只更改 color 的值並儲存。</li>
+<li>依次開啟五頁，確認品牌名稱一起變色。</li>
+</ol>
+<h3>完成後核對</h3>
+<ul>
+<li>五頁品牌文字都是 #08786c。</li>
+<li>h1、h2 仍用 #a53f78；沒有逐頁加入 style 屬性。</li>
+</ul>
+<h2>練習 2｜選取範圍要配合 HTML 結構</h2>
+<p>讓第二款食品也使用現有推薦邊框，保留第一款的推薦狀態。</p>
+<h3>操作</h3>
+<ol>
+<li>在 menu.html 找到第二個食品 article。</li>
+<li>保留 food-card，加入 recommended。</li>
+<li>重新整理，核對前兩張與第三張卡的分別。</li>
+</ol>
+<h3>完成後核對</h3>
+<ul>
+<li>第一、第二張卡均有 2px 的綠色邊框。</li>
+<li>第三張卡沒有推薦邊框；CSS 沒有複製一份相同規則。</li>
+</ul>
+<h2>練習 3｜從實際採用的規則找原因</h2>
+<p>在衝突與繼承小示範設定 body 的 line-height 為 1.8，再為 p 設定 1.2，比較繼承與直接宣告。</p>
+<h3>操作</h3>
+<ol>
+<li>先只在 body 加 line-height: 1.8，儲存並查看段落。</li>
+<li>在 p 加 line-height: 1.2，再查看段落。</li>
+<li>用 Computed 比較兩階段的行高，說明哪個值被採用。</li>
+</ol>
+<h3>完成後核對</h3>
+<ul>
+<li>第一階段段落使用 1.8 的繼承值。</li>
+<li>第二階段段落使用自己的 1.2；body 仍是 1.8。</li>
+</ul>
+</body></html>

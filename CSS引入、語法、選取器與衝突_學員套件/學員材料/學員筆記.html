@@ -1,0 +1,369 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>CSS 引入、語法、選取器與衝突｜學員筆記</title><style>*{box-sizing:border-box}body{margin:28px auto;padding:0 20px;max-width:980px;font:17px/1.75 system-ui,sans-serif;color:#233b35;background:#fffdf7;overflow-wrap:anywhere}h1{font-size:clamp(1.65rem,5vw,2.2rem);line-height:1.35}h2{margin-top:2rem}h3{margin-top:1.6rem}a{color:#8b3e25;text-underline-offset:3px}nav{display:flex;flex-wrap:wrap;gap:10px 24px;margin:20px 0}pre{background:#172c28;color:#eef8f2;padding:18px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}code{font-size:.92em}p code,li code{background:#e7eee8;padding:2px 4px;border-radius:3px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #c5d2c8;padding:8px;text-align:left}img,video{max-width:100%}@media(max-width:480px){body{padding:0 14px;font-size:16px}pre{padding:12px}}</style></head><body><nav><a href="../學員入口.html">學員入口</a></nav><h1>CSS 引入、語法、選取器與衝突</h1>
+<p>本節接續自己的網站，逐部分完成操作並保存修改。需要乾淨起點時，另複製相應開始版，保留原作品。</p>
+<p>參考時數：4 小時。課堂茶餐廳為虛構教學案例；正式個案使用自己的選題、資料及設計。</p>
+<h2>使用本章檔案</h2>
+<p>下載學員套件後完整解壓，開啟「學員入口.html」。課堂檔案集中在「學員課堂檔案」；外層資料夾可改名，內部結構保持完整。</p>
+<p>用 VS Code 的 File &gt; Open Folder 開啟自己的網站根資料夾，即包含 <code>index.html</code> 的那一層；由該頁啟動 Live Server。以下 <code>css/site.css</code> 等檔案路徑均從正在編輯的網站根資料夾出發；CSS 中的 <code>url(...)</code> 則以 CSS 檔位置為起點。</p>
+<p>下方連結開啟相應開始版或獨立小示範；平日仍接續自己的作品。</p>
+<h2>1. 讓五頁共用一份CSS</h2>
+<p>功能編號：<code>U01-T03-C01-01_共用樣式</code>。</p>
+<p><a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C01-01_%E5%85%B1%E7%94%A8%E6%A8%A3%E5%BC%8F/%E9%96%8B%E5%A7%8B%E7%89%88/index.html">本片開始版</a> · <a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C01-01_%E5%85%B1%E7%94%A8%E6%A8%A3%E5%BC%8F/%E5%B0%8F%E7%A4%BA%E7%AF%84/index.html">獨立小示範</a></p>
+<h3>觀察與操作</h3>
+<p>開啟「共用樣式」小示範，依次指出 inline、internal 和 external 的來源；在 DevTools 暫時取消 external 的 color，再恢復。回到五頁網站，對照每個 head 的 link。</p>
+<h3>概念與符號</h3>
+<p>CSS負責顯示層，HTML仍負責內容結構。CSS規則先寫選取器，再用大括號包宣告。color是屬性，冒號後是值，分號結束一項宣告。/* ... */是CSS註解。</p>
+<p>inline寫在style屬性，只影響單一元素；internal放在head內的style，適合小示範；external放在獨立.css檔，由link載入，適合多頁共同樣式。本課主站使用css/site.css，五頁都加入相同link，改一份便影響五頁。CSS副檔名不可誤存為HTML。</p>
+<p>h1, h2的逗號表示兩組選取器共用規則；.brand選HTML中class=&quot;brand&quot;的元素。HTML的class值不加句點，句點只寫在CSS選取器中。這片先改善文字色及焦點，不同時加入版面技術。</p>
+<h3>加入自己的專案</h3>
+<ol>
+<li>在根目錄新增css資料夾，內建site.css，輸入下列完整CSS。</li>
+<li>在五個介紹頁的head內各加入<code>&lt;link rel=&quot;stylesheet&quot; href=&quot;css/site.css&quot;&gt;</code>。</li>
+<li>儲存，依序查看五頁標題及文字色；用Tab選到連結確認焦點框。</li>
+<li>小示範比較style屬性、style元素與外部檔，主站只保留外部檔。</li>
+</ol>
+<h3>本片可逐行輸入的完整變更檔</h3>
+<p>以下列出本片改動的完整文字檔。接續自己的作品時，只加入本片需要的差異，保留自己的內容及先前小變化。圖片與媒體沿用課堂檔案，並保留內部資料夾關係。</p>
+<p><strong>index.html</strong></p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;歡迎來到陳記｜陳記茶餐廳&lt;/title&gt;
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/site.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;p class=&quot;brand&quot;&gt;陳記茶餐廳&lt;/p&gt;
+&lt;nav aria-label=&quot;主要導覽&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;index.html&quot; aria-current=&quot;page&quot;&gt;首頁&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;about.html&quot;&gt;簡介&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;menu.html&quot;&gt;食物介紹&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;location.html&quot;&gt;位置&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;contact.html&quot;&gt;聯絡&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1 id=&quot;top&quot;&gt;歡迎來到陳記&lt;/h1&gt;
+
+&lt;p&gt;港式日常滋味，從一杯奶茶開始。&lt;/p&gt;
+&lt;p&gt;課堂示範網站&lt;/p&gt;
+&lt;h2&gt;本店特色&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;港式主食&lt;/li&gt;
+  &lt;li&gt;冷熱飲品&lt;/li&gt;
+  &lt;li&gt;日常輕食&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2&gt;了解餐廳的次序&lt;/h2&gt;
+&lt;ol&gt;
+  &lt;li&gt;閱讀食物介紹&lt;/li&gt;
+  &lt;li&gt;查看位置及營業時間&lt;/li&gt;
+&lt;/ol&gt;
+&lt;dl&gt;
+  &lt;dt&gt;熱飲&lt;/dt&gt;&lt;dd&gt;按餐牌基本價錢計算。&lt;/dd&gt;
+  &lt;dt&gt;凍飲&lt;/dt&gt;&lt;dd&gt;適用飲品在基本價錢上加 HK$3。&lt;/dd&gt;
+&lt;/dl&gt;
+&lt;h2 id=&quot;food-intro&quot;&gt;推薦食品&lt;/h2&gt;
+&lt;ul&gt;&lt;li&gt;乾炒牛河：HK$58&lt;/li&gt;&lt;li&gt;港式奶茶：HK$22&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&quot;about.html&quot;&gt;閱讀餐廳簡介&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#food-intro&quot;&gt;前往推薦食品&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;#top&quot;&gt;返回頁頂&lt;/a&gt;&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;images/milk-tea.svg&quot; alt=&quot;港式奶茶的教學示意圖&quot; width=&quot;480&quot; height=&quot;320&quot;&gt;
+  &lt;figcaption&gt;港式奶茶，基本價錢 HK$22。此圖並非食品實拍。&lt;/figcaption&gt;
+&lt;/figure&gt;
+&lt;h2&gt;地址資訊預覽&lt;/h2&gt;
+&lt;iframe src=&quot;location-preview.html&quot; title=&quot;陳記茶餐廳地址資訊&quot; width=&quot;480&quot; height=&quot;250&quot; sandbox loading=&quot;lazy&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;佐敦德興街12號興富中心。&lt;/p&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;p&gt;課堂示範網站&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>about.html</strong></p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;餐廳簡介｜陳記茶餐廳&lt;/title&gt;
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/site.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;p class=&quot;brand&quot;&gt;陳記茶餐廳&lt;/p&gt;
+&lt;nav aria-label=&quot;主要導覽&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;index.html&quot;&gt;首頁&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;about.html&quot; aria-current=&quot;page&quot;&gt;簡介&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;menu.html&quot;&gt;食物介紹&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;location.html&quot;&gt;位置&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;contact.html&quot;&gt;聯絡&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;餐廳簡介&lt;/h1&gt;
+&lt;section class=&quot;story-section&quot;&gt;&lt;h2&gt;街坊的日常&lt;/h2&gt;&lt;p&gt;陳記供應熟悉的港式餐點，陪伴街坊的日常。&lt;/p&gt;&lt;h2&gt;我們的特色&lt;/h2&gt;&lt;ul&gt;&lt;li&gt;清楚的餐牌&lt;/li&gt;&lt;li&gt;方便閱讀的資訊&lt;/li&gt;&lt;/ul&gt;&lt;/section&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;p&gt;課堂示範網站&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>menu.html</strong></p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;食物介紹｜陳記茶餐廳&lt;/title&gt;
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/site.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;p class=&quot;brand&quot;&gt;陳記茶餐廳&lt;/p&gt;
+&lt;nav aria-label=&quot;主要導覽&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;index.html&quot;&gt;首頁&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;about.html&quot;&gt;簡介&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;menu.html&quot; aria-current=&quot;page&quot;&gt;食物介紹&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;location.html&quot;&gt;位置&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;contact.html&quot;&gt;聯絡&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;食物介紹&lt;/h1&gt;
+&lt;div id=&quot;food-list&quot;&gt;
+&lt;article class=&quot;food-card&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;乾炒牛河&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$58&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&quot;food-card&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;揚州炒飯&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$52&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&quot;food-card&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;沙嗲牛肉麵&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$38&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;p&gt;課堂示範網站&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>location.html</strong></p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;位置及營業時間｜陳記茶餐廳&lt;/title&gt;
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/site.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;p class=&quot;brand&quot;&gt;陳記茶餐廳&lt;/p&gt;
+&lt;nav aria-label=&quot;主要導覽&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;index.html&quot;&gt;首頁&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;about.html&quot;&gt;簡介&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;menu.html&quot;&gt;食物介紹&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;location.html&quot; aria-current=&quot;page&quot;&gt;位置&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;contact.html&quot;&gt;聯絡&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;位置及營業時間&lt;/h1&gt;
+&lt;h2&gt;餐廳地址&lt;/h2&gt;&lt;img id=&quot;gallery-image&quot; src=&quot;images/location-map.svg&quot; alt=&quot;興富中心地址資訊示意&quot; width=&quot;640&quot; height=&quot;400&quot;&gt;&lt;p&gt;佐敦德興街12號興富中心&lt;/p&gt;&lt;p&gt;每日07:00–20:00。&lt;/p&gt;
+&lt;table&gt;
+  &lt;caption&gt;陳記營業時間&lt;/caption&gt;
+  &lt;thead&gt;&lt;tr&gt;&lt;th scope=&quot;col&quot;&gt;日期&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;開店&lt;/th&gt;&lt;th scope=&quot;col&quot;&gt;關店&lt;/th&gt;&lt;/tr&gt;&lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;星期一至五&lt;/th&gt;&lt;td&gt;07:00&lt;/td&gt;&lt;td&gt;20:00&lt;/td&gt;&lt;/tr&gt;
+    &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;星期六、日&lt;/th&gt;&lt;td&gt;07:00&lt;/td&gt;&lt;td&gt;20:00&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;th scope=&quot;row&quot;&gt;公眾假期&lt;/th&gt;&lt;td&gt;07:00&lt;/td&gt;&lt;td&gt;20:00&lt;/td&gt;&lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;tfoot&gt;&lt;tr&gt;&lt;td colspan=&quot;3&quot;&gt;每日供應早餐、午餐及下午茶。&lt;/td&gt;&lt;/tr&gt;&lt;/tfoot&gt;
+&lt;/table&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;p&gt;課堂示範網站&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>contact.html</strong></p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;聯絡與查詢｜陳記茶餐廳&lt;/title&gt;
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/site.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;p class=&quot;brand&quot;&gt;陳記茶餐廳&lt;/p&gt;
+&lt;nav aria-label=&quot;主要導覽&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;index.html&quot;&gt;首頁&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;about.html&quot;&gt;簡介&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;menu.html&quot;&gt;食物介紹&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;location.html&quot;&gt;位置&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;contact.html&quot; aria-current=&quot;page&quot;&gt;聯絡&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;聯絡與查詢&lt;/h1&gt;
+&lt;h2&gt;課堂查詢區&lt;/h2&gt;&lt;p&gt;示例電郵：hello@example.invalid&lt;/p&gt;&lt;p&gt;這個位址不提供真實服務，請勿輸入個人資料。&lt;/p&gt;
+&lt;p id=&quot;form-help&quot;&gt;填好後按按鈕，頁面會重新載入。&lt;/p&gt;
+&lt;form id=&quot;enquiry-form&quot; action=&quot;contact.html&quot; method=&quot;get&quot; aria-describedby=&quot;form-help&quot;&gt;
+  &lt;p&gt;&lt;label for=&quot;customer-name&quot;&gt;稱呼&lt;/label&gt;
+  &lt;input id=&quot;customer-name&quot; name=&quot;customerName&quot; type=&quot;text&quot; required maxlength=&quot;40&quot;&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;label for=&quot;customer-email&quot;&gt;電郵&lt;/label&gt;
+  &lt;input id=&quot;customer-email&quot; name=&quot;email&quot; type=&quot;email&quot; required&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;label for=&quot;enquiry-type&quot;&gt;查詢類別&lt;/label&gt;
+  &lt;select id=&quot;enquiry-type&quot; name=&quot;enquiryType&quot; required&gt;
+    &lt;option value=&quot;&quot;&gt;請選擇&lt;/option&gt;
+    &lt;option value=&quot;menu&quot;&gt;餐牌資料&lt;/option&gt;
+    &lt;option value=&quot;hours&quot;&gt;營業時間&lt;/option&gt;
+  &lt;/select&gt;&lt;/p&gt;
+  &lt;p&gt;&lt;label for=&quot;message&quot;&gt;查詢內容&lt;/label&gt;
+  &lt;textarea id=&quot;message&quot; name=&quot;message&quot; rows=&quot;5&quot; required minlength=&quot;10&quot; maxlength=&quot;300&quot;&gt;&lt;/textarea&gt;&lt;/p&gt;
+  &lt;button type=&quot;submit&quot;&gt;檢查格式（本機示範）&lt;/button&gt;
+&lt;/form&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;p&gt;課堂示範網站&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><strong>css/site.css</strong></p>
+<pre><code class="language-css">body { color: #243238; background-color: #ffffff; }
+h1, h2 { color: #a53f78; }
+.brand { color: #a53f78; font-weight: bold; }
+a { color: #08786c; }
+a:hover, a:focus-visible { color: #a53f78; }
+a:focus-visible { outline: 3px solid #08786c; }
+</code></pre>
+<h3>核對結果</h3>
+<ul>
+<li>五頁均載入 css/site.css</li>
+<li>標題色 #a53f78；品牌色依規則</li>
+<li>鍵盤焦點清楚可見</li>
+</ul>
+<h3>小變化</h3>
+<p>把五頁共用的 .brand 文字色改為 #08786c，保留標題及其他連結的規則。</p>
+<p>詳細步驟及完成條件見本章「課堂練習」第 1 題。</p>
+<h3>常見卡位與恢復</h3>
+<p>完全無樣式先核對rel及href；不要先加!important。</p>
+<p>可停點：完成本段操作後儲存整個網站；未完成時記下正在處理的檔案及步驟，下節從同一作品接續。</p>
+<h2>2. 選中需要改變的元素</h2>
+<p>功能編號：<code>U01-T03-C01-02_選取器與範圍</code>。</p>
+<p><a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C01-02_%E9%81%B8%E5%8F%96%E5%99%A8%E8%88%87%E7%AF%84%E5%9C%8D/%E9%96%8B%E5%A7%8B%E7%89%88/index.html">本片開始版</a> · <a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C01-02_%E9%81%B8%E5%8F%96%E5%99%A8%E8%88%87%E7%AF%84%E5%9C%8D/%E5%B0%8F%E7%A4%BA%E7%AF%84/index.html">獨立小示範</a></p>
+<h3>觀察與操作</h3>
+<p>用 Elements 展開 nav → ul → li → a；在小示範把 nav a 暫改 nav &gt; a，觀察匹配消失後恢復。再指出同一元素上的兩個 class。</p>
+<h3>概念與符號</h3>
+<p>元素選取器如p選所有同類元素；class以句點開頭，適合重用；id以#開頭，指定頁內唯一元素。空格表示後代，例如nav a會找到nav內更深層的a；&gt;只選直接子元素，nav &gt; ul能選我們導覽中的ul，但nav &gt; a選不到被li包住的連結。</p>
+<p>.food-card.recommended沒有空格，表示同一元素同時有兩個class；.food-card .recommended有空格，則找卡片裡面的後代。屬性選取器a[aria-current=&quot;page&quot;]依屬性值選目前頁面。:hover在指標移到元素時生效，:focus-visible在瀏覽器判定需顯示焦點時生效，鍵盤使用者也需要可見位置。</p>
+<h3>加入自己的專案</h3>
+<ol>
+<li>將下列選取器加入site.css末尾。</li>
+<li>在menu.html第一個article加recommended class，其他class保留。</li>
+<li>查看只有第一張卡有邊框、目前頁面連結加粗。</li>
+<li>Chrome右鍵檢查第一張卡，在Elements的Styles查看各條規則；小示範把空格與&gt;互換觀察選取範圍。</li>
+</ol>
+<h3>本片可逐行輸入的完整變更檔</h3>
+<p>以下列出本片改動的完整文字檔。接續自己的作品時，只加入本片需要的差異，保留自己的內容及先前小變化。圖片與媒體沿用課堂檔案，並保留內部資料夾關係。</p>
+<p><strong>css/site.css</strong></p>
+<pre><code class="language-css">body { color: #243238; background-color: #ffffff; }
+h1, h2 { color: #a53f78; }
+.brand { color: #a53f78; font-weight: bold; }
+a { color: #08786c; }
+a:hover, a:focus-visible { color: #a53f78; }
+a:focus-visible { outline: 3px solid #08786c; }
+nav &gt; ul { list-style-type: none; }
+nav a { text-decoration: underline; }
+a[aria-current=&quot;page&quot;] { font-weight: bold; }
+.food-card.recommended { border: 2px solid #08786c; }
+#food-list { background-color: #edf8f5; }
+</code></pre>
+<p><strong>menu.html</strong></p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;食物介紹｜陳記茶餐廳&lt;/title&gt;
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/site.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;p class=&quot;brand&quot;&gt;陳記茶餐廳&lt;/p&gt;
+&lt;nav aria-label=&quot;主要導覽&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;index.html&quot;&gt;首頁&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;about.html&quot;&gt;簡介&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;menu.html&quot; aria-current=&quot;page&quot;&gt;食物介紹&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;location.html&quot;&gt;位置&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;contact.html&quot;&gt;聯絡&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;食物介紹&lt;/h1&gt;
+&lt;div id=&quot;food-list&quot;&gt;
+&lt;article class=&quot;food-card recommended&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;乾炒牛河&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$58&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&quot;food-card&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;揚州炒飯&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$52&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&quot;food-card&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;沙嗲牛肉麵&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$38&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;p&gt;課堂示範網站&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3>核對結果</h3>
+<ul>
+<li>只有指定的推薦卡有邊框</li>
+<li>目前頁面連結加粗</li>
+<li>能從 HTML 找出被選中的元素</li>
+</ul>
+<h3>小變化</h3>
+<p>讓第二款食品也使用現有推薦邊框，保留第一款的推薦狀態。</p>
+<p>詳細步驟及完成條件見本章「課堂練習」第 2 題。</p>
+<h3>常見卡位與恢復</h3>
+<p>預期只選一個卻全變時，逐個看選取器是元素、class還是後代；不要依外觀猜。</p>
+<p>可停點：完成本段操作後儲存整個網站；未完成時記下正在處理的檔案及步驟，下節從同一作品接續。</p>
+<h2>3. 用DevTools找出實際採用的規則</h2>
+<p>功能編號：<code>U01-T03-C01-03_衝突與繼承</code>。</p>
+<p><a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C01-03_%E8%A1%9D%E7%AA%81%E8%88%87%E7%B9%BC%E6%89%BF/%E9%96%8B%E5%A7%8B%E7%89%88/index.html">本片開始版</a> · <a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C01-03_%E8%A1%9D%E7%AA%81%E8%88%87%E7%B9%BC%E6%89%BF/%E5%B0%8F%E7%A4%BA%E7%AF%84/index.html">獨立小示範</a></p>
+<h3>觀察與操作</h3>
+<p>選取小示範的 p，打開 Styles 和 Computed。記下採用的 color，再對調兩條 .note，重新核對。完成後恢復原次序。</p>
+<h3>概念與符號</h3>
+<p>Cascade是瀏覽器決定同一屬性採用哪個值的規則。本片比較同一作者來源、沒有!important及cascade layer的普通宣告：先比較specificity，再比較出現次序。id通常高於class/屬性/偽類，後者高於元素；權重相同才由較後規則勝出。實際完整cascade還包括來源、重要性和層，不可背成「最後一行永遠贏」。</p>
+<p>某些屬性如color和font-family會由父元素繼承，border、margin一般不會。元素有自己直接宣告的值時，不只拿父元素較具體的選取器競爭。DevTools的Styles可見被劃掉的宣告，Computed顯示最終值。不要靠不斷增加id或!important把問題藏起來。</p>
+<h3>加入自己的專案</h3>
+<ol>
+<li>開啟小示範，查看 class=&quot;note&quot; 的段落顏色。</li>
+<li>Chrome按右鍵「檢查」，在Elements選該段，查看Styles中哪個color被劃掉。</li>
+<li>把兩條.note對調，重看同權重的順序結果。</li>
+<li>回主站在site.css末尾只加一條.brand { color: #08786c; }，確認效果後把舊.brand色值統一，避免重複衝突。</li>
+</ol>
+<h3>本片可逐行輸入的完整變更檔</h3>
+<p>以下列出本片改動的完整文字檔。接續自己的作品時，只加入本片需要的差異，保留自己的內容及先前小變化。圖片與媒體沿用課堂檔案，並保留內部資料夾關係。</p>
+<p><strong>css/site.css</strong></p>
+<pre><code class="language-css">body { color: #243238; background-color: #ffffff; }
+h1, h2 { color: #a53f78; }
+.brand { color: #08786c; font-weight: bold; }
+a { color: #08786c; }
+a:hover, a:focus-visible { color: #a53f78; }
+a:focus-visible { outline: 3px solid #08786c; }
+nav &gt; ul { list-style-type: none; }
+nav a { text-decoration: underline; }
+a[aria-current=&quot;page&quot;] { font-weight: bold; }
+.food-card.recommended { border: 2px solid #08786c; }
+#food-list { background-color: #edf8f5; }
+</code></pre>
+<h3>核對結果</h3>
+<ul>
+<li>相同 .note：較後宣告生效</li>
+<li>較後的 p 不會蓋過 .note</li>
+<li>主站品牌色有清楚來源</li>
+</ul>
+<h3>小變化</h3>
+<p>在衝突與繼承小示範設定 body 的 line-height 為 1.8，再為 p 設定 1.2，比較繼承與直接宣告。</p>
+<p>詳細步驟及完成條件見本章「課堂練習」第 3 題。</p>
+<h3>常見卡位與恢復</h3>
+<p>Styles找不到預期規則表示選取器或檔案未匹配；找到但劃掉才是衝突問題。</p>
+<p>可停點：完成本段操作後儲存整個網站；未完成時記下正在處理的檔案及步驟，下節從同一作品接續。</p>
+<h2>章末保留與接續</h2>
+<p>儲存自己的整個網站及小變化。從工作根資料夾重新開啟，核對本章功能，並記下尚待處理的問題；下節接續同一作品。</p>
+</body></html>
