@@ -1,0 +1,196 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>盒子模型、文字、色彩、列表與背景｜學員筆記</title><style>*{box-sizing:border-box}body{margin:28px auto;padding:0 20px;max-width:980px;font:17px/1.75 system-ui,sans-serif;color:#233b35;background:#fffdf7;overflow-wrap:anywhere}h1{font-size:clamp(1.65rem,5vw,2.2rem);line-height:1.35}h2{margin-top:2rem}h3{margin-top:1.6rem}a{color:#8b3e25;text-underline-offset:3px}nav{display:flex;flex-wrap:wrap;gap:10px 24px;margin:20px 0}pre{background:#172c28;color:#eef8f2;padding:18px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}code{font-size:.92em}p code,li code{background:#e7eee8;padding:2px 4px;border-radius:3px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #c5d2c8;padding:8px;text-align:left}img,video{max-width:100%}@media(max-width:480px){body{padding:0 14px;font-size:16px}pre{padding:12px}}</style></head><body><nav><a href="../學員入口.html">學員入口</a></nav><h1>盒子模型、文字、色彩、列表與背景</h1>
+<p>本節接續自己的網站，逐部分完成操作並保存修改。需要乾淨起點時，另複製相應開始版，保留原作品。</p>
+<p>參考時數：4 小時。課堂茶餐廳為虛構教學案例；正式個案使用自己的選題、資料及設計。</p>
+<h2>使用本章檔案</h2>
+<p>下載學員套件後完整解壓，開啟「學員入口.html」。課堂檔案集中在「學員課堂檔案」；外層資料夾可改名，內部結構保持完整。</p>
+<p>用 VS Code 的 File &gt; Open Folder 開啟自己的網站根資料夾，即包含 <code>index.html</code> 的那一層；由該頁啟動 Live Server。以下 <code>css/site.css</code> 等檔案路徑均從正在編輯的網站根資料夾出發；CSS 中的 <code>url(...)</code> 則以 CSS 檔位置為起點。</p>
+<p>下方連結開啟相應開始版或獨立小示範；平日仍接續自己的作品。</p>
+<h2>1. 分清內容、內距、邊框、外距</h2>
+<p>功能編號：<code>U01-T03-C02-01_盒子與留白</code>。</p>
+<p><a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C02-01_%E7%9B%92%E5%AD%90%E8%88%87%E7%95%99%E7%99%BD/%E9%96%8B%E5%A7%8B%E7%89%88/index.html">本片開始版</a> · <a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C02-01_%E7%9B%92%E5%AD%90%E8%88%87%E7%95%99%E7%99%BD/%E5%B0%8F%E7%A4%BA%E7%AF%84/index.html">獨立小示範</a></p>
+<h3>觀察與操作</h3>
+<p>打開盒子小示範的 Computed 盒子圖，逐一指 content、padding、border、margin。切換 content-box／border-box，量度外框寬度。</p>
+<h3>概念與符號</h3>
+<p>盒子由內到外是content、padding、border、margin。content放文字或圖片，padding是內容到邊框的內距，border是邊界，margin是盒子外面與鄰居的距離。預設content-box的width只計內容，200px加左右20px內距及2px邊框，外框為244px；margin另算。</p>
+<p>box-sizing:border-box讓width包含padding及border，同一設定外框仍200px。max-width設定上限；本例在可用寬度較小時可縮小，但內容少不會自動縮寬。1rem 相對根元素的字體大小，比固定一大堆像素容易保持比例。本片主站卡片仍依正常文檔流一張接一張，不先教Grid。</p>
+<h3>加入自己的專案</h3>
+<ol>
+<li>把盒子規則加入site.css末尾。</li>
+<li>在menu.html右鍵檢查food-card，查看Computed的盒子模型，逐區指出內距及外距。</li>
+<li>在小示範把box-sizing改content-box，先算244px再看實際；改border-box比對。</li>
+<li>回主站只調整padding一次，確認文字與邊框距離變，並保存。</li>
+</ol>
+<h3>本片可逐行輸入的完整變更檔</h3>
+<p>以下列出本片改動的完整文字檔。接續自己的作品時，只加入本片需要的差異，保留自己的內容及先前小變化。圖片與媒體沿用課堂檔案，並保留內部資料夾關係。</p>
+<p><strong>css/site.css</strong></p>
+<pre><code class="language-css">body { color: #243238; background-color: #ffffff; }
+h1, h2 { color: #a53f78; }
+.brand { color: #08786c; font-weight: bold; }
+a { color: #08786c; }
+a:hover, a:focus-visible { color: #a53f78; }
+a:focus-visible { outline: 3px solid #08786c; }
+nav &gt; ul { list-style-type: none; }
+nav a { text-decoration: underline; }
+a[aria-current=&quot;page&quot;] { font-weight: bold; }
+.food-card.recommended { border: 2px solid #08786c; }
+#food-list { background-color: #edf8f5; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header, main, footer { max-width: 70rem; margin: 0 auto; padding: 1rem; }
+.food-card { padding: 1rem; margin: 1rem 0; border: 2px solid #c3e3dd; border-radius: .5rem; }
+</code></pre>
+<h3>核對結果</h3>
+<ul>
+<li>content-box 外框：244px</li>
+<li>border-box 外框：200px</li>
+<li>內距與外距能分別指出</li>
+</ul>
+<h3>小變化</h3>
+<p>把食品卡的 padding 由 1rem 改為 1.5rem，保持 margin 的宣告不變。</p>
+<p>詳細步驟及完成條件見本章「課堂練習」第 1 題。</p>
+<h3>常見卡位與恢復</h3>
+<p>盒子比想像寬先查box-sizing及左右padding/border；不要立即縮小文字。</p>
+<p>可停點：完成本段操作後儲存整個網站；未完成時記下正在處理的檔案及步驟，下節從同一作品接續。</p>
+<h2>2. 讓段落和清單容易讀</h2>
+<p>功能編號：<code>U01-T03-C02-02_文字與列表</code>。</p>
+<p><a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C02-02_%E6%96%87%E5%AD%97%E8%88%87%E5%88%97%E8%A1%A8/%E9%96%8B%E5%A7%8B%E7%89%88/index.html">本片開始版</a> · <a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C02-02_%E6%96%87%E5%AD%97%E8%88%87%E5%88%97%E8%A1%A8/%E5%B0%8F%E7%A4%BA%E7%AF%84/index.html">獨立小示範</a></p>
+<h3>觀察與操作</h3>
+<p>在小示範改 square／circle 及 outside／inside，觀察換行的標記位置。回主站放大頁面，檢視段落及導覽。</p>
+<h3>概念與符號</h3>
+<p>font-family指定字體候選，system-ui使用系統介面字體，sans-serif是最後備選。font-size控制大小，font-weight控制粗幼，line-height控制行距，text-align控制對齊。繁體中文長段落保留足夠行距和適當行長，不把字縮小來塞滿畫面。</p>
+<p>color是文字顏色，background-color是背景。十六進位色碼如#08786c只是表示方式，也可見rgb或色名。資訊不能只靠顏色傳達，推薦卡還應有「推薦」文字。列表外觀可用list-style-type改square或none，但保留ul/li內容關係；padding-left留出符號位置。</p>
+<h3>加入自己的專案</h3>
+<ol>
+<li>把文字規則加入site.css。</li>
+<li>為menu.html的第一款食品在名稱後加「（推薦）」文字。</li>
+<li>在Chrome放大到200%，閱讀一段文字和全部導覽，確認仍可用。</li>
+<li>小示範改list-style-type和list-style-position，觀察符號及換行；主站用square保持清楚。</li>
+</ol>
+<h3>本片可逐行輸入的完整變更檔</h3>
+<p>以下列出本片改動的完整文字檔。接續自己的作品時，只加入本片需要的差異，保留自己的內容及先前小變化。圖片與媒體沿用課堂檔案，並保留內部資料夾關係。</p>
+<p><strong>css/site.css</strong></p>
+<pre><code class="language-css">body { color: #243238; background-color: #ffffff; }
+h1, h2 { color: #a53f78; }
+.brand { color: #08786c; font-weight: bold; }
+a { color: #08786c; }
+a:hover, a:focus-visible { color: #a53f78; }
+a:focus-visible { outline: 3px solid #08786c; }
+nav &gt; ul { list-style-type: none; }
+nav a { text-decoration: underline; }
+a[aria-current=&quot;page&quot;] { font-weight: bold; }
+.food-card.recommended { border: 2px solid #08786c; }
+#food-list { background-color: #edf8f5; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header, main, footer { max-width: 70rem; margin: 0 auto; padding: 1rem; }
+.food-card { padding: 1rem; margin: 1rem 0; border: 2px solid #c3e3dd; border-radius: .5rem; }
+body { font-family: system-ui, sans-serif; font-size: 1rem; line-height: 1.7; }
+h1 { font-size: 2rem; line-height: 1.25; }
+h2 { font-size: 1.4rem; line-height: 1.35; }
+.food-card p { margin: .5rem 0; }
+main ul { list-style-type: square; padding-left: 1.5rem; }
+footer { font-size: .9rem; }
+</code></pre>
+<p><strong>menu.html</strong></p>
+<pre><code class="language-html">&lt;!doctype html&gt;
+&lt;html lang=&quot;zh-Hant&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;utf-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+  &lt;title&gt;食物介紹｜陳記茶餐廳&lt;/title&gt;
+
+  &lt;link rel=&quot;stylesheet&quot; href=&quot;css/site.css&quot;&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;header&gt;&lt;p class=&quot;brand&quot;&gt;陳記茶餐廳&lt;/p&gt;
+&lt;nav aria-label=&quot;主要導覽&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;index.html&quot;&gt;首頁&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;about.html&quot;&gt;簡介&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;menu.html&quot; aria-current=&quot;page&quot;&gt;食物介紹&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;location.html&quot;&gt;位置&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;contact.html&quot;&gt;聯絡&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/nav&gt;&lt;/header&gt;
+&lt;main&gt;
+&lt;h1&gt;食物介紹&lt;/h1&gt;
+&lt;div id=&quot;food-list&quot;&gt;
+&lt;article class=&quot;food-card recommended&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;乾炒牛河（推薦）&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$58&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&quot;food-card&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;揚州炒飯&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$52&lt;/p&gt;&lt;/article&gt;
+&lt;article class=&quot;food-card&quot; data-category=&quot;主食&quot;&gt;&lt;h2&gt;沙嗲牛肉麵&lt;/h2&gt;&lt;p&gt;分類：主食&lt;/p&gt;&lt;p&gt;基本價錢 HK$38&lt;/p&gt;&lt;/article&gt;
+&lt;/div&gt;
+&lt;/main&gt;
+&lt;footer&gt;&lt;p&gt;課堂示範網站&lt;/p&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<h3>核對結果</h3>
+<ul>
+<li>段落行距清楚</li>
+<li>推薦同時有文字標示</li>
+<li>無序符號與有序數字各自保留</li>
+</ul>
+<h3>小變化</h3>
+<p>把首頁「本店特色」的符號改成 circle，保持「了解餐廳的次序」仍有數字。</p>
+<p>詳細步驟及完成條件見本章「課堂練習」第 2 題。</p>
+<h3>常見卡位與恢復</h3>
+<p>若清單符號不見，先查是否有nav或廣泛ul規則覆蓋，不把li改成普通p。</p>
+<p>可停點：完成本段操作後儲存整個網站；未完成時記下正在處理的檔案及步驟，下節從同一作品接續。</p>
+<h2>3. 讓背景失敗時文字仍可讀</h2>
+<p>功能編號：<code>U01-T03-C02-03_背景與路徑</code>。</p>
+<p><a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C02-03_%E8%83%8C%E6%99%AF%E8%88%87%E8%B7%AF%E5%BE%91/%E9%96%8B%E5%A7%8B%E7%89%88/index.html">本片開始版</a> · <a href="../%E5%AD%B8%E5%93%A1%E8%AA%B2%E5%A0%82%E6%AA%94%E6%A1%88/U01-T03-C02-03_%E8%83%8C%E6%99%AF%E8%88%87%E8%B7%AF%E5%BE%91/%E5%B0%8F%E7%A4%BA%E7%AF%84/index.html">獨立小示範</a></p>
+<h3>觀察與操作</h3>
+<p>從 VS Code 檔案樹逐層指出 css/style.css 與 images/pattern.svg，修改 repeat、position、size 及 attachment 時每次只改一項。</p>
+<h3>概念與符號</h3>
+<p>background-image:url(...)的相對路徑從CSS檔位置開始。css/site.css找根層images需要../images/...，和HTML的src起點不同。background-color是圖片失敗時的底色，重要文字仍要在HTML。</p>
+<p>background-repeat有repeat、repeat-x、repeat-y、no-repeat；position兩值說明水平與垂直位置；size可用cover填滿（可能裁切）或contain完整放入（可能留白）。attachment:scroll隨頁面內容捲動，fixed通常以視窗為基準，在部分裝置行為不同，要實際檢查。這些屬性在小示範逐一改，主站保留簡單底色以便閱讀。shorthand可合併，但初學先逐項寫清楚。</p>
+<h3>加入自己的專案</h3>
+<ol>
+<li>在獨立小示範開啟index.html，CSS位於css/style.css，圖片位於images/pattern.svg。</li>
+<li>先將repeat-x改no-repeat，觀察只留一份；再改position為center top。</li>
+<li>將size改cover和contain作比較，再把attachment由scroll改fixed並捲動。</li>
+<li>回主站加入下列三條底色規則，確認即使沒有裝飾圖片文字也清楚。</li>
+</ol>
+<h3>本片可逐行輸入的完整變更檔</h3>
+<p>以下列出本片改動的完整文字檔。接續自己的作品時，只加入本片需要的差異，保留自己的內容及先前小變化。圖片與媒體沿用課堂檔案，並保留內部資料夾關係。</p>
+<p><strong>css/site.css</strong></p>
+<pre><code class="language-css">body { color: #243238; background-color: #ffffff; }
+h1, h2 { color: #a53f78; }
+.brand { color: #08786c; font-weight: bold; }
+a { color: #08786c; }
+a:hover, a:focus-visible { color: #a53f78; }
+a:focus-visible { outline: 3px solid #08786c; }
+nav &gt; ul { list-style-type: none; }
+nav a { text-decoration: underline; }
+a[aria-current=&quot;page&quot;] { font-weight: bold; }
+.food-card.recommended { border: 2px solid #08786c; }
+#food-list { background-color: #edf8f5; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header, main, footer { max-width: 70rem; margin: 0 auto; padding: 1rem; }
+.food-card { padding: 1rem; margin: 1rem 0; border: 2px solid #c3e3dd; border-radius: .5rem; }
+body { font-family: system-ui, sans-serif; font-size: 1rem; line-height: 1.7; }
+h1 { font-size: 2rem; line-height: 1.25; }
+h2 { font-size: 1.4rem; line-height: 1.35; }
+.food-card p { margin: .5rem 0; }
+main ul { list-style-type: square; padding-left: 1.5rem; }
+footer { font-size: .9rem; }
+header { background-color: #edf8f5; }
+.food-card { background-color: #ffffff; }
+footer { background-color: #edf8f5; }
+</code></pre>
+<h3>核對結果</h3>
+<ul>
+<li>圖片路徑從 CSS 檔出發</li>
+<li>能分辨重複、位置和縮放</li>
+<li>底色與文字保持清楚</li>
+</ul>
+<h3>小變化</h3>
+<p>讓背景小示範的圖案只沿垂直方向重複，整列放在右上角。</p>
+<p>詳細步驟及完成條件見本章「課堂練習」第 3 題。</p>
+<h3>常見卡位與恢復</h3>
+<p>若固定背景影響裝置上的閱讀，可使用 scroll，並保留可讀底色。</p>
+<p>可停點：完成本段操作後儲存整個網站；未完成時記下正在處理的檔案及步驟，下節從同一作品接續。</p>
+<h2>章末保留與接續</h2>
+<p>儲存自己的整個網站及小變化。從工作根資料夾重新開啟，核對本章功能，並記下尚待處理的問題；下節接續同一作品。</p>
+</body></html>

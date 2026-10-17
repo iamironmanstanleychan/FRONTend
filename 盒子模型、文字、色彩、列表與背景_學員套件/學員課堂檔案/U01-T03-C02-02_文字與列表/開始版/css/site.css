@@ -1,0 +1,15 @@
+body { color: #243238; background-color: #ffffff; }
+h1, h2 { color: #a53f78; }
+.brand { color: #08786c; font-weight: bold; }
+a { color: #08786c; }
+a:hover, a:focus-visible { color: #a53f78; }
+a:focus-visible { outline: 3px solid #08786c; }
+nav > ul { list-style-type: none; }
+nav a { text-decoration: underline; }
+a[aria-current="page"] { font-weight: bold; }
+.food-card.recommended { border: 2px solid #08786c; }
+#food-list { background-color: #edf8f5; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+header, main, footer { max-width: 70rem; margin: 0 auto; padding: 1rem; }
+.food-card { padding: 1rem; margin: 1rem 0; border: 2px solid #c3e3dd; border-radius: .5rem; }

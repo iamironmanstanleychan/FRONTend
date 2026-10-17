@@ -1,0 +1,42 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>盒子模型、文字、色彩、列表與背景｜課堂練習</title><style>*{box-sizing:border-box}body{margin:28px auto;padding:0 20px;max-width:980px;font:17px/1.75 system-ui,sans-serif;color:#233b35;background:#fffdf7;overflow-wrap:anywhere}h1{font-size:clamp(1.65rem,5vw,2.2rem);line-height:1.35}h2{margin-top:2rem}h3{margin-top:1.6rem}a{color:#8b3e25;text-underline-offset:3px}nav{display:flex;flex-wrap:wrap;gap:10px 24px;margin:20px 0}pre{background:#172c28;color:#eef8f2;padding:18px;border-radius:8px;white-space:pre-wrap;overflow-wrap:anywhere}code{font-size:.92em}p code,li code{background:#e7eee8;padding:2px 4px;border-radius:3px}table{border-collapse:collapse;width:100%}td,th{border:1px solid #c5d2c8;padding:8px;text-align:left}img,video{max-width:100%}@media(max-width:480px){body{padding:0 14px;font-size:16px}pre{padding:12px}}</style></head><body><nav><a href="../學員入口.html">學員入口</a></nav><h1>課堂練習</h1>
+<p>以下每題對應學員筆記同編號的「小變化」，是同一項練習。獨立完成並保留自己的修改；需要起點時先另複製開始版。除註明小示範外，檔案路徑以自己的網站根資料夾為起點。</p>
+<h2>練習 1｜分清盒子內外的距離</h2>
+<p>把食品卡的 padding 由 1rem 改為 1.5rem，保持 margin 的宣告不變。</p>
+<h3>操作</h3>
+<ol>
+<li>開啟 css/site.css，找到 .food-card。</li>
+<li>只更改 padding。</li>
+<li>在 menu.html 查看卡片，再在 Computed 核對內距與外距。</li>
+</ol>
+<h3>完成後核對</h3>
+<ul>
+<li>四邊 padding 是 1.5rem；margin 仍是 1rem 0。</li>
+<li>文字到邊框的距離增加；能說明卡片高度可能增加。</li>
+</ul>
+<h2>練習 2｜文字與清單先求易讀</h2>
+<p>把首頁「本店特色」的符號改成 circle，保持「了解餐廳的次序」仍有數字。</p>
+<h3>操作</h3>
+<ol>
+<li>只為「本店特色」的 ul 加 class=&quot;features&quot;。</li>
+<li>在 css/site.css 加 .features 的 circle 規則。</li>
+<li>比較特色列表、步驟列表及導覽。</li>
+</ol>
+<h3>完成後核對</h3>
+<ul>
+<li>本店特色使用 circle。</li>
+<li>有序步驟仍顯示數字，導覽外觀保持。</li>
+</ul>
+<h2>練習 3｜背景路徑從 CSS 出發</h2>
+<p>讓背景小示範的圖案只沿垂直方向重複，整列放在右上角。</p>
+<h3>操作</h3>
+<ol>
+<li>修改 css/style.css 的 .banner。</li>
+<li>設定 repeat-y、right top，並保留 size:auto。</li>
+<li>捲動查看右側圖案，確認左側沒有水平平鋪。</li>
+</ol>
+<h3>完成後核對</h3>
+<ul>
+<li>只沿 y 方向重複，位置 right top。</li>
+<li>圖片及底色正常載入；路徑仍為 ../images/pattern.svg。</li>
+</ul>
+</body></html>

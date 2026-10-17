@@ -1,0 +1,14 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Open index.html",
+            "file": "/Users/gtcroom6/Documents/FRONTend/CSS引入、語法、選取器與衝突_學員套件/學員課堂檔案/U01-T03-C01-01_共用樣式/小示範/index.html"
+        }
+    ]
+}
