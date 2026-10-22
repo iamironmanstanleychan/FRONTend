@@ -1,0 +1,6 @@
+body { color: #243238; background-color: #ffffff; }
+h1, h2 { color: #a53f78; }
+.brand { color: #a53f78; font-weight: bold; }
+a { color: #08786c; }
+a:hover, a:focus-visible { color: #a53f78; }
+a:focus-visible { outline: 3px solid #08786c; }

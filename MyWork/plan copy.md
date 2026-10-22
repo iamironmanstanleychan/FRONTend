@@ -47,3 +47,41 @@ Abu Simbel, Giza & Luxor
 Meteora (Greece)
 
 Lake Bled / Postojna / Predjama (Slovenia)
+
+Galápagos Islands
+
+The Red Centre
+
+Chengdu & Jiuzhaigou
+
+Abu Simbel, Giza & Luxor
+
+Meteora (Greece)
+
+Lake Bled / Postojna / Predjama (Slovenia)
+
+Turrda salt mine Romania 
+
+1001 nights movie at Uzbekistan 
+
+
+Country & Key Sights	Primary Visual Wonder	Signature Group Experience	Transit Style
+🇺🇿 Uzbekistan (Samarkand & Bukhara)	
+Shimmering blue-and-gold geometric tiles and colossal domes	
+Exploring vibrant evening spice markets under illuminated minarets	Ultra-Smooth: Luxury 250 km/h high-speed bullet trains.
+🇯🇴 Jordan (Petra & Wadi Rum)	
+Vibrant pink-sandstone facades carved directly into canyon walls	Taking a 4WD open-air truck safari through deep red sand dunes	Scenic Road Trip: Private group mini-bus or SUV rentals.
+🇸🇦 Saudi Arabia (AlUla & Hegra)	
+Perfectly preserved monumental stone tombs isolated in open sand	Staying at a world-class luxury eco-resort nestled inside canyon boulders
+Premium: Private drivers or guided resort transport.
+
+
+Safe Destination Choice	Safe Regional Companions	Traveling Security Vibe
+🇺🇿 Uzbekistan (Samarkand & Bukhara)	
+Silk Road paths, Tashkent	
+Highly secure, welcoming, and modern bullet-train transit.
+🇨🇳 Zhangjiajie, China	Jiuzhaigou Valley, Chengdu	
+World-class public safety, flawless roads, and easy group logistics.
+🇭🇷 Plitvice Lakes, Croatia	Slovenia (Lake Bled, Postojna Cave)	
+Peaceful European Union road-tripping with pristine nature.
+🇦🇺 The Twelve Apostles, Australia	Melbourne, Great Ocean Road	Relaxed, English-speaking, ultra-safe coastal self-drive.
