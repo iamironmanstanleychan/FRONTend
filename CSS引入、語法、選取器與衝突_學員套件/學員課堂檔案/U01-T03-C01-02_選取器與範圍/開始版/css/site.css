@@ -4,3 +4,8 @@ h1, h2 { color: #a53f78; }
 a { color: #08786c; }
 a:hover, a:focus-visible { color: #a53f78; }
 a:focus-visible { outline: 3px solid #08786c; }
+nav > ul { list-style-type: none; }
+nav a { text-decoration: underline; }
+a[aria-current="page"] { font-weight: bold; }
+.food-card.recommended { border: 2px solid #08786c; }
+#food-list { background-color: #edf8f5; }
