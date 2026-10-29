@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+  margin: 0;
+}
+h2::before {
+  content: "\2605 ";
+color: gold ;
+}
+h2::after {
+  content: "\2605 ";
+color: gold ;
+}
+
+.notice p {
+  display: none;
+  background-color: yellow;
+  padding: 20px;
+}
+.notice:hover p {
+  display: block;
+}
+/* Original */
+ul {
+  list-style-type: none;
+  margin-right: 0;
+  padding: 0;
+  width: 80px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+li {
+  text-align: center;
+  border-bottom: 1px solid #555555;
+}
+
+li:last-child {
+  border-bottom: none;
+}
+li a {
+  display: block;
+  color: black;
+  padding: 16px 16px;
+  text-decoration: none;
+}
+li a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+li a:hover:not(.active) {
+  background-color: #555555;
+  color: white;
+}
+/* new */
+li {
+  text-align: center;
+  border-bottom: 1px solid #555555;
+}
+li:last-child {
+  border-bottom: none;
+}
+/* new */
+
+p:nth-child(even) {
+font-size: 100% ; 
+color: red ;
+}
+
+p:nth-child(odd)::first-letter {
+font-size: 125% ; 
+color: blue ;
+float: left; 
+
+}
+
+</style>
+</head>
+<body>
+
+<ul>
+  <li><a class="active" href="#home">Home</a></li>
+  <li><a href="#news">News</a></li>
+  <li><a href="#contact">Contact</a></li>
+  <li><a href="#about">About</a></li>
+</ul>
+
+<div style="margin-left:80px;padding:1px 16px;height:1000px;">
+  <h2>Full-height Vertical Navbar</h2>
+  <h3>Try to scroll this area, and see how the sidenav sticks to the page</h3>
+  <div class="notice">
+      <span>Hover here to show the below hidden sentence</span>
+      <p>Notice that we have set overflow:auto to sidenav. This will add a scrollbar when the sidenav is too long (for example if it has over 50 links inside of it).</p>
+  </div>
+  <p>First sentence.</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  <p>Some text..</p>
+  </div>
+</div>
+
+</body>
+</html>
+
+
