@@ -391,7 +391,7 @@ for scen, mkt, split, subrev_row, ballrev_b2b_row, plat_row, user_row, ballenh_r
             rev = f"({col}{subrev_row}*{split} + {col}{ballrev_b2b_row} + {custom} + license_fee + {grant})"
             cost = f"({col}{plat_row} + {col}{user_row} + {col}{ballenh_row} + {col}{ballcost_row} + manpower_annual + uni_rd_cash)"
             profit_expr = f"({rev} - {cost})"
-            taxable_expr = f"{profit_expr} - uni_rd_cash*(rd_deduct-1)"
+            taxable_expr = f"({profit_expr} - uni_rd_cash*(rd_deduct-1))"
             tax_expr = f"IF({taxable_expr}<=0, 0, IF({taxable_expr}<=tax_limit, {taxable_expr}*tax_r1, tax_limit*tax_r1 + ({taxable_expr}-tax_limit)*tax_r2))"
             net_expr = f"{profit_expr} - {tax_expr}"
             ws.cell(row=helper_row, column=i+2, value=f"={net_expr}").number_format = '#,##0.00'
