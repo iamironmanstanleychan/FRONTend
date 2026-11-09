@@ -4,6 +4,7 @@ Fixes: Column shift bug in Helper Table (now reads B-G). Removed empty rows.
 """
 
 import openpyxl
+from pathlib import Path
 from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 from openpyxl.utils import get_column_letter
 from openpyxl.workbook.defined_name import DefinedName
@@ -548,6 +549,32 @@ ws.cell(row=17, column=3, value="P50")
 ws.cell(row=17, column=4, value="P90")
 hdr(ws, 17, 4)
 
+for i, mkt in enumerate(("30%", "35%", "40%")):
+    b2b_row = 6 + i
+    b2c_row = 12 + i
+    fairness_row = 18 + i
+    ws.cell(row=b2b_row, column=1, value=mkt).font = BOLD_NUM
+    ws.cell(row=b2c_row, column=1, value=mkt).font = BOLD_NUM
+    ws.cell(row=fairness_row, column=1, value=mkt).font = BOLD_NUM
+
+    for j in range(3):
+        col = j + 2
+        b2b_helper_row = 31 + i * 3 + j
+        b2c_helper_row = 41 + i * 3 + j
+        ws.cell(row=b2b_row, column=col, value=f"=I{b2b_helper_row}").number_format = '#,##0.00'
+        ws.cell(row=b2c_row, column=col, value=f"=I{b2c_helper_row}").number_format = '#,##0.00'
+        col_letter = get_column_letter(col)
+        ws.cell(row=fairness_row, column=col, value=f"={col_letter}{b2c_row}/{col_letter}{b2b_row}").number_format = '0.0000'
+
+    for row in (b2b_row, b2c_row, fairness_row):
+        for col in range(1, 5):
+            cell = ws.cell(row=row, column=col)
+            cell.border = BORDER
+            cell.alignment = CENTER
+            if col > 1:
+                cell.fill = CALC_FILL
+                cell.font = NUM_FONT
+
 # Helper Table (Rows 29-49)
 ws.cell(row=29, column=1, value="HELPER TABLE (Year-by-Year Net Profit)").font = BOLD_NUM
 ws.cell(row=29, column=1).fill = SUB_FILL
@@ -816,7 +843,7 @@ widths(ws, [35, 55, 55, 18])
 # ═══════════════════════════════════════════════════════════
 # SAVE
 # ═══════════════════════════════════════════════════════════
-OUT = "KungFu_AI_Football_Financial_Model_v3.6.5.xlsx"
+OUT = Path(__file__).resolve().with_name("KungFu_AI_Football_Financial_Model_v3.6.5.xlsx")
 wb.save(OUT)
 print(f"✅ Saved: {OUT}")
 print(f"   Column shift fixed: Helper Table now reads B-G.")
