@@ -1,0 +1,933 @@
+"""
+Kung Fu AI Football — 4-Page Negotiation Brief (.docx)
+Requires: pip install python-docx matplotlib
+Standalone. Outputs Negotiation_Brief_4page_INTERNAL.docx
+
+Page 1: Governing equation + the 20x frontier chart + price ladder
+Page 2: Two-tranche proposal + founder retention chart + structures table
+Page 3: Return matrix chart + scenario dilution chart + positions
+Page 4: PongBot/StepOut lessons + milestone timeline + applied actions
+"""
+
+import io
+import numpy as np
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+from matplotlib.patches import FancyBboxPatch
+from docx import Document
+from docx.shared import Pt, RGBColor, Cm
+from docx.enum.text import WD_ALIGN_PARAGRAPH
+from docx.enum.table import WD_TABLE_ALIGNMENT
+from docx.oxml.ns import qn
+from docx.oxml import OxmlElement
+
+# ===========================================================================
+# COLOUR PALETTE
+# ===========================================================================
+
+NAVY       = "#1F3864"
+RED        = "#C00000"
+GREEN      = "#0F6B3C"
+GOLD       = "#BF9000"
+ORANGE     = "#E07B00"
+GREY       = "#595959"
+LIGHT_BLUE = "#D9E2F3"
+PALE_GREEN = "#E2EFDA"
+PALE_RED   = "#FCE4E4"
+
+plt.rcParams.update({
+    "font.family": "DejaVu Sans",
+    "font.size": 8.5,
+    "axes.edgecolor": "#BFBFBF",
+    "axes.labelcolor": NAVY,
+    "axes.titlecolor": NAVY,
+    "axes.titleweight": "bold",
+    "axes.spines.top": False,
+    "axes.spines.right": False,
+    "axes.grid": True,
+    "grid.color": "#E7E6E6",
+    "grid.linewidth": 0.5,
+    "xtick.color": GREY,
+    "ytick.color": GREY,
+})
+
+# ===========================================================================
+# CHART FUNCTIONS
+# ===========================================================================
+
+def fig_to_buf(fig):
+    buf = io.BytesIO()
+    fig.savefig(buf, format="png", dpi=140, bbox_inches="tight", facecolor="white")
+    buf.seek(0)
+    plt.close(fig)
+    return buf
+
+
+def chart_ladder():
+    """Page 1: the 20x frontier."""
+    fig, ax = plt.subplots(figsize=(6.7, 3.2), dpi=140)
+
+    pre = np.linspace(4, 20, 400)
+    sa_req = 20 * (pre + 1)
+
+    ax.plot(pre, sa_req, color=NAVY, linewidth=2.5, zorder=3,
+            label="Series A required for 20×")
+    ax.axhline(134.23, color=RED, linestyle="--", linewidth=1.5, zorder=2,
+               label="Series A midpoint = HK$134.23M")
+
+    ax.fill_between(pre, sa_req, 134.23, where=(sa_req > 134.23),
+                    color=RED, alpha=0.08, zorder=1)
+    ax.fill_between(pre, 134.23, sa_req, where=(sa_req <= 134.23),
+                    color=GREEN, alpha=0.10, zorder=1)
+
+    ax.scatter([5.71], [134.2], s=280, color=GREEN, edgecolor="white",
+               linewidth=2.5, zorder=6)
+    ax.annotate("A: HK$5.71M\n20× AT MIDPOINT",
+                xy=(5.71, 134.2), xytext=(28, 55),
+                textcoords="offset points", fontsize=8.5, fontweight="bold",
+                color=GREEN,
+                arrowprops=dict(arrowstyle="->", color=GREEN, lw=1.5))
+
+    for label, p, color, dx, dy in [
+        ("B", 7.80, GOLD, 12, -30),
+        ("C", 9.00, GOLD, 12, 18),
+        ("D", 13.42, RED, 12, 18),
+    ]:
+        sa = 20 * (p + 1)
+        ax.scatter([p], [sa], s=140, color=color, edgecolor="white",
+                   linewidth=1.8, zorder=5)
+        ax.annotate(f"{label}: HK${p:.2f}M\nneeds SA HK${sa:.0f}M",
+                    xy=(p, sa), xytext=(dx, dy),
+                    textcoords="offset points", fontsize=7,
+                    color=color, fontweight="bold")
+
+    ax.axvline(5.71, color=GREEN, linestyle=":", linewidth=0.8,
+               alpha=0.6, zorder=1)
+    ax.set_xlabel("Seed pre-money (HK$M)")
+    ax.set_ylabel("Series A required for 20× (HK$M)")
+    ax.set_xlim(4, 20)
+    ax.set_ylim(90, 450)
+    ax.legend(loc="upper left", frameon=False, fontsize=8)
+    ax.set_title("The 20× Frontier — Only One Seed Price Returns the Fund at the Midpoint",
+                 loc="left", pad=10)
+
+    fig.tight_layout()
+    return fig_to_buf(fig)
+
+
+def chart_structures():
+    """Page 2: founder retention across structures."""
+    fig, ax = plt.subplots(figsize=(6.7, 2.9), dpi=140)
+
+    structures = [
+        ("One cheque HK$0.5M",     92.55, PALE_GREEN),
+        ("Two tranches",           88.85, PALE_GREEN),
+        ("One cheque HK$1.0M",     85.10, LIGHT_BLUE),
+        ("Two seeds simultaneous", 85.10, LIGHT_BLUE),
+        ("Lead + follower",        85.10, LIGHT_BLUE),
+    ]
+    labels = [s[0] for s in structures]
+    values = [s[1] for s in structures]
+    colors = [s[2] for s in structures]
+
+    y = list(range(len(structures)))
+    ax.barh(y, values, color=colors, edgecolor=NAVY, linewidth=1.0, height=0.6)
+
+    for i, v in enumerate(values):
+        ax.text(v + 0.3, i, f"{v:.2f}%", va="center", fontsize=9.5,
+                fontweight="bold", color=NAVY)
+
+    ax.set_yticks(y)
+    ax.set_yticklabels(labels, fontsize=9)
+    ax.set_xlim(80, 96)
+    ax.set_xlabel("Founder retained after seed (%)")
+    ax.axvline(85.10, color=GREY, linestyle=":", linewidth=0.8, alpha=0.5)
+    ax.axvline(92.55, color=GREEN, linestyle=":", linewidth=0.8, alpha=0.5)
+    ax.invert_yaxis()
+    ax.set_title("Founder Retention by Structure — Same Cheque, Different Cost",
+                 loc="left", pad=10)
+
+    fig.tight_layout()
+    return fig_to_buf(fig)
+
+
+def chart_returns():
+    """Page 3: investor multiple vs Series A price."""
+    fig, ax = plt.subplots(figsize=(6.7, 3.2), dpi=140)
+
+    sa = np.linspace(50, 500, 400)
+    prices = [
+        ("HK$5.71M seed — 14.90%", 5.71, GREEN),
+        ("HK$7.80M seed — 11.36%", 7.80, GOLD),
+        ("HK$9.00M seed — 10.00%", 9.00, ORANGE),
+        ("HK$13.42M seed — 6.93%", 13.42, RED),
+    ]
+    for label, pre, color in prices:
+        mult = sa / (pre + 1.0)
+        ax.plot(sa, mult, color=color, linewidth=2.0, label=label)
+
+    ax.axhline(20, color=RED, linestyle="--", linewidth=1.5, alpha=0.7)
+    ax.axhline(10, color=GREY, linestyle=":", linewidth=1.2, alpha=0.7)
+    ax.text(55, 21, "20× fund floor", fontsize=8, color=RED, fontweight="bold")
+    ax.text(55, 11, "10× fair return", fontsize=8, color=GREY, fontweight="bold")
+
+    ax.axvline(134.23, color=NAVY, linestyle=":", linewidth=1.2, alpha=0.6)
+    ax.text(140, 3, "Midpoint\nHK$134.23M", fontsize=7.5, color=NAVY,
+            fontweight="bold")
+
+    ax.set_xlabel("Series A pre-money (HK$M)")
+    ax.set_ylabel("Investor return multiple (×)")
+    ax.set_ylim(0, 50)
+    ax.set_xlim(50, 500)
+    ax.legend(loc="upper right", frameon=False, fontsize=8)
+    ax.set_title("Investor Return vs Series A — Same Exit, Four Different Seed Prices",
+                 loc="left", pad=10)
+
+    fig.tight_layout()
+    return fig_to_buf(fig)
+
+
+def chart_scenarios():
+    """Page 3: dilution across global scenarios."""
+    fig, ax = plt.subplots(figsize=(6.7, 2.9), dpi=140)
+
+    scenarios = [
+        ("S2 Tailwind",      5.0,  7.5,  PALE_GREEN),
+        ("S0 Base",         10.0, 14.9,  LIGHT_BLUE),
+        ("S4 Compute",      12.2, 24.4,  GOLD),
+        ("S1 Winter",       16.7, 35.7,  PALE_RED),
+        ("S3 Contraction",  30.0, 60.0,  PALE_RED),
+    ]
+
+    labels = [s[0] for s in scenarios]
+    y = list(range(len(scenarios)))
+
+    for i, (label, lo, hi, color) in enumerate(scenarios):
+        ax.barh(i, hi - lo, left=lo, height=0.6, color=color,
+                edgecolor=NAVY, linewidth=0.8)
+        ax.text(hi + 0.8, i, f"{lo:.0f}–{hi:.0f}%", va="center",
+                fontsize=9, fontweight="bold", color=NAVY)
+
+    ax.set_yticks(y)
+    ax.set_yticklabels(labels, fontsize=9)
+    ax.set_xlim(0, 70)
+    ax.set_xlabel("Founder dilution at base-case Series A (%)")
+    ax.axvline(14.9, color=RED, linestyle="--", linewidth=1.2, alpha=0.7)
+    ax.text(15.5, -0.5, "S0 base\n14.9%", fontsize=7.5, color=RED,
+            fontweight="bold")
+    ax.invert_yaxis()
+    ax.set_title("Dilution Across Scenarios — Downturns Cost 2–4× More Equity",
+                 loc="left", pad=10)
+
+    fig.tight_layout()
+    return fig_to_buf(fig)
+
+
+def chart_timeline():
+    """Page 4: milestone-gated structure."""
+    fig, ax = plt.subplots(figsize=(6.7, 2.2), dpi=140)
+    ax.set_xlim(0, 10)
+    ax.set_ylim(0, 3)
+    ax.axis("off")
+
+    nodes = [
+        (1.0, 1.5, "TRANCHE 1", "HK$0.5M\n7.45%", NAVY,
+         "PongBot: two campaigns\nStepOut: SaaS launch"),
+        (3.5, 1.5, "MILESTONE", "10K kicks → 5 LOIs\n80% coach agreement", GOLD,
+         "PongBot: shipping\nStepOut: operating metrics"),
+        (6.0, 1.5, "TRANCHE 2", "HK$0.5M\n4.00%", GREEN,
+         "PongBot: second campaign\nStepOut: Pre-A step-up"),
+        (8.5, 1.5, "SERIES A", "HK$134M+\n10–20× return", RED,
+         "Priced by evidence"),
+    ]
+
+    for x, y_, label, sub, color, lesson in nodes:
+        box = FancyBboxPatch((x - 0.9, y_ - 0.55), 1.8, 1.1,
+                             boxstyle="round,pad=0.05",
+                             facecolor="white", edgecolor=color, linewidth=2)
+        ax.add_patch(box)
+        ax.text(x, y_ + 0.28, label, ha="center", va="center",
+                fontsize=8, fontweight="bold", color=color)
+        ax.text(x, y_ - 0.18, sub, ha="center", va="center",
+                fontsize=6.8, color=GREY)
+        ax.text(x, 0.25, lesson, ha="center", va="center",
+                fontsize=6.5, color=GOLD, style="italic")
+
+    for i in range(len(nodes) - 1):
+        x1 = nodes[i][0] + 0.9
+        x2 = nodes[i + 1][0] - 0.9
+        ax.annotate("", xy=(x2, 1.5), xytext=(x1, 1.5),
+                    arrowprops=dict(arrowstyle="->", color=NAVY, lw=1.5))
+
+    ax.text(1.0, 2.65, "Ship, don't plan", ha="center", fontsize=7,
+            color=GREY, style="italic")
+    ax.text(3.5, 2.65, "Verifiable · dated · countable", ha="center",
+            fontsize=7, color=GREY, style="italic")
+    ax.text(6.0, 2.65, "Prices the second tranche", ha="center",
+            fontsize=7, color=GREY, style="italic")
+    ax.text(8.5, 2.65, "Priced by evidence", ha="center", fontsize=7,
+            color=GREY, style="italic")
+
+    fig.tight_layout()
+    return fig_to_buf(fig)
+
+# ===========================================================================
+# DOCX HELPERS
+# ===========================================================================
+
+def set_cell_bg(cell, hex_color):
+    tc_pr = cell._tc.get_or_add_tcPr()
+    shd = OxmlElement("w:shd")
+    shd.set(qn("w:val"), "clear")
+    shd.set(qn("w:color"), "auto")
+    shd.set(qn("w:fill"), hex_color)
+    tc_pr.append(shd)
+
+
+def no_borders(tbl):
+    tblPr = tbl._tbl.tblPr
+    borders = OxmlElement("w:tblBorders")
+    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        el = OxmlElement(f"w:{edge}")
+        el.set(qn("w:val"), "nil")
+        borders.append(el)
+    tblPr.append(borders)
+
+
+def thin_borders(tbl):
+    tblPr = tbl._tbl.tblPr
+    borders = OxmlElement("w:tblBorders")
+    for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+        el = OxmlElement(f"w:{edge}")
+        el.set(qn("w:val"), "single")
+        el.set(qn("w:sz"), "4")
+        el.set(qn("w:color"), "BFBFBF")
+        borders.append(el)
+    tblPr.append(borders)
+
+
+def page_title(doc, title, subtitle):
+    """Navy title band with subtitle."""
+    tbl = doc.add_table(rows=1, cols=1)
+    tbl.autofit = False
+    cell = tbl.cell(0, 0)
+    cell.width = Cm(18.0)
+    set_cell_bg(cell, "1F3864")
+    no_borders(tbl)
+
+    p = cell.paragraphs[0]
+    p.paragraph_format.space_before = Pt(4)
+    p.paragraph_format.space_after = Pt(2)
+    r = p.add_run(title)
+    r.bold = True
+    r.font.size = Pt(12)
+    r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+
+    p2 = cell.add_paragraph()
+    p2.paragraph_format.space_after = Pt(4)
+    r2 = p2.add_run(subtitle)
+    r2.italic = True
+    r2.font.size = Pt(8)
+    r2.font.color.rgb = RGBColor(0xD9, 0xE2, 0xF3)
+
+    sp = doc.add_paragraph()
+    sp.paragraph_format.space_after = Pt(2)
+
+
+def section_heading(doc, text, color=NAVY):
+    p = doc.add_paragraph()
+    p.paragraph_format.space_before = Pt(8)
+    p.paragraph_format.space_after = Pt(3)
+    r = p.add_run(text)
+    r.bold = True
+    r.font.size = Pt(10)
+    r.font.color.rgb = RGBColor.from_string(color[1:])
+
+
+def callout_box(doc, text, fill_color, text_color, border_color,
+                size=10, bold=True, italic=False):
+    """Single-cell highlighted box."""
+    tbl = doc.add_table(rows=1, cols=1)
+    tbl.autofit = False
+    cell = tbl.cell(0, 0)
+    cell.width = Cm(18.0)
+    set_cell_bg(cell, fill_color)
+    thin_borders(tbl)
+
+    p = cell.paragraphs[0]
+    p.paragraph_format.space_before = Pt(5)
+    p.paragraph_format.space_after = Pt(5)
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    r = p.add_run(text)
+    r.bold = bold
+    r.italic = italic
+    r.font.size = Pt(size)
+    r.font.color.rgb = RGBColor.from_string(text_color[1:])
+
+    sp = doc.add_paragraph()
+    sp.paragraph_format.space_after = Pt(2)
+
+
+def bullet(doc, segments, size=9):
+    p = doc.add_paragraph(style="List Bullet")
+    p.paragraph_format.space_after = Pt(2)
+    for text, bold in segments:
+        r = p.add_run(text)
+        r.bold = bold
+        r.font.size = Pt(size)
+
+
+def data_table(doc, headers, rows, widths=None, highlight_col=None,
+               header_fill="1F3864", font_size=8.5, shade_rows=None):
+    t = doc.add_table(rows=1, cols=len(headers))
+    t.style = "Table Grid"
+    t.alignment = WD_TABLE_ALIGNMENT.CENTER
+    hdr = t.rows[0].cells
+    for i, h in enumerate(headers):
+        hdr[i].text = ""
+        p = hdr[i].paragraphs[0]
+        p.paragraph_format.space_after = Pt(1)
+        r = p.add_run(h)
+        r.bold = True
+        r.font.size = Pt(font_size)
+        r.font.color.rgb = RGBColor(0xFF, 0xFF, 0xFF)
+        set_cell_bg(hdr[i], header_fill)
+
+    shade_rows = shade_rows or []
+    for ri, row in enumerate(rows):
+        cells = t.add_row().cells
+        for i, v in enumerate(row):
+            cells[i].text = ""
+            p = cells[i].paragraphs[0]
+            p.paragraph_format.space_after = Pt(1)
+            r = p.add_run(str(v))
+            r.font.size = Pt(font_size)
+            if highlight_col is not None and i == highlight_col:
+                set_cell_bg(cells[i], "EAF1F8")
+        if ri in shade_rows:
+            for c in cells:
+                set_cell_bg(c, "F2F2F2")
+
+    if widths:
+        for row in t.rows:
+            for i, w in enumerate(widths):
+                row.cells[i].width = Cm(w)
+    return t
+
+
+def page_break(doc):
+    doc.add_page_break()
+
+# ===========================================================================
+# DOCUMENT SETUP
+# ===========================================================================
+
+doc = Document()
+sec = doc.sections[0]
+sec.page_width = Cm(21.0)
+sec.page_height = Cm(29.7)
+sec.left_margin = Cm(1.5)
+sec.right_margin = Cm(1.5)
+sec.top_margin = Cm(1.2)
+sec.bottom_margin = Cm(1.2)
+
+# Header
+hdr = sec.header.paragraphs[0]
+hdr.alignment = WD_ALIGN_PARAGRAPH.CENTER
+r = hdr.add_run("INTERNAL  ·  CONFIDENTIAL  ·  NOT FOR DISTRIBUTION")
+r.bold = True
+r.font.size = Pt(7.5)
+r.font.color.rgb = RGBColor(0xC0, 0x00, 0x00)
+
+# Footer
+ftr = sec.footer.paragraphs[0]
+ftr.alignment = WD_ALIGN_PARAGRAPH.CENTER
+r = ftr.add_run("Kung Fu AI Football  ·  Negotiation Brief  ·  "
+                "v14  ·  Draft, pre-validation  ·  Conditions on Y1–Y3 audit and pilot")
+r.italic = True
+r.font.size = Pt(7)
+r.font.color.rgb = RGBColor(0x80, 0x80, 0x80)
+
+# Base style
+st = doc.styles["Normal"]
+st.font.name = "Calibri"
+st.font.size = Pt(9.5)
+st.element.rPr.rFonts.set(qn("w:eastAsia"), "Microsoft YaHei")
+
+# ===========================================================================
+# PAGE 1 — THE GOVERNING EQUATION & THE 20X FRONTIER
+# ===========================================================================
+
+page_title(
+    doc,
+    "PAGE 1  ·  THE GOVERNING EQUATION",
+    "Dilution is fixed by the Series A price and the fund's multiple — not by "
+    "the pre-money you negotiate."
+)
+
+callout_box(
+    doc,
+    "Founder dilution = (cheque × required multiple) ÷ Series A price",
+    fill_color="E2EFDA",
+    text_color=NAVY,
+    border_color=GREEN,
+    size=12,
+    bold=True
+)
+
+p = doc.add_paragraph()
+p.paragraph_format.space_after = Pt(2)
+r = p.add_run(
+    "Three consequences:  (i) dilution is independent of the pre-money you negotiate;  "
+    "(ii) a downturn raises your dilution for the same cheque, because SA falls while "
+    "the required multiple holds;  (iii) the only levers are C, M and SA — smaller "
+    "cheque, lower required multiple, or a higher Series A clearing price."
+)
+r.italic = True
+r.font.size = Pt(8.5)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+section_heading(doc, "The 20× Frontier")
+
+chart1 = chart_ladder()
+doc.add_picture(chart1, width=Cm(17.5))
+doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+section_heading(doc, "The Ladder — Four Seed Prices, Four Different Outcomes")
+
+data_table(
+    doc,
+    ["", "Seed pre-money", "HK$1M buys", "Series A for 20×", "What it requires"],
+    [
+        ["A", "HK$5.71M", "14.90%", "HK$134.2M", "20× at midpoint — maximum dilution"],
+        ["B", "HK$7.80M", "11.36%", "HK$176.0M", "20× if Series A clears HK$176M"],
+        ["C", "HK$9.00M", "10.00%", "HK$200.0M", "20× if Series A clears HK$200M"],
+        ["D", "HK$13.42M", "6.93%", "HK$288.4M", "10× at midpoint — founder's opening"],
+    ],
+    widths=[0.9, 2.6, 2.4, 3.2, 8.2],
+    highlight_col=2,
+    shade_rows=[0]
+)
+
+note = doc.add_paragraph()
+note.paragraph_format.space_before = Pt(4)
+r = note.add_run(
+    "A is the only seed price at which a HK$1.0M cheque returns the fund 20× at the "
+    "midpoint. D delivers 10× — fair, but insufficient for a 5% survival fund. Open at "
+    "D, land at B or C, refuse A alone."
+)
+r.italic = True
+r.font.size = Pt(8)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+callout_box(
+    doc,
+    "The three sentences to carry into the room",
+    fill_color="1F3864",
+    text_color="#FFFFFF",
+    border_color=NAVY,
+    size=9.5,
+    bold=True
+)
+
+for s in [
+    "1.  HK$9M for 10% is a dream-frame price, not a market price — it is fund arithmetic, not a valuation disagreement.",
+    "2.  Dilution is fixed by the Series A price and the fund's multiple, not by the pre-money you negotiate. Only three levers exist.",
+    "3.  I cannot accept committed dilution with optional capital. If the second tranche is at your discretion, it prices after the pilot.",
+]:
+    p = doc.add_paragraph()
+    p.paragraph_format.space_after = Pt(2)
+    p.paragraph_format.left_indent = Cm(0.3)
+    r = p.add_run(s)
+    r.font.size = Pt(8.5)
+
+p = doc.add_paragraph()
+p.paragraph_format.space_before = Pt(3)
+p.paragraph_format.space_after = Pt(2)
+r = p.add_run(
+    "Tranche 1 is allocated to the 10,000-kick dataset and the benchmark it produces. "
+    "The 5 LOIs follow from showing each academy its own players' data. That is the "
+    "milestone that prices Tranche 2."
+)
+r.italic = True
+r.font.size = Pt(8.5)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+# ===========================================================================
+# PAGE 2 — THE PROPOSAL & STRUCTURES
+# ===========================================================================
+
+page_break(doc)
+
+page_title(
+    doc,
+    "PAGE 2  ·  THE PROPOSAL — TWO TRANCHES",
+    "Same HK$1.0M raised, but the second cheque prices against evidence."
+)
+
+callout_box(
+    doc,
+    "HK$0.5M now at HK$6.21M pre (7.45%)   +   HK$0.5M post-pilot at HK$12.0M pre (4.00%)\n"
+    "Blended: HK$1.0M for 11.15%   ·   Founder retains 88.85%",
+    fill_color="E2EFDA",
+    text_color=GREEN,
+    border_color=GREEN,
+    size=11,
+    bold=True
+)
+
+p = doc.add_paragraph()
+p.paragraph_format.space_after = Pt(2)
+r = p.add_run(
+    "Versus 14.90% for HK$1.0M in one cheque — the second tranche saves ~3.75 points "
+    "of the company, because it prices against pilot evidence, not against the plan. "
+    "Fallback: HK$0.5M single cheque at HK$6.21M pre — 7.45%, highest pre-money, "
+    "half the dilution, half the capital."
+)
+r.italic = True
+r.font.size = Pt(8.5)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+section_heading(doc, "Founder Retention — Same Cheque, Different Cost")
+
+chart2 = chart_structures()
+doc.add_picture(chart2, width=Cm(17.5))
+doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+section_heading(doc, "Structure Comparison")
+
+data_table(
+    doc,
+    ["Structure", "Raised", "Founder retains", "Largest holder", "Note"],
+    [
+        ["One cheque HK$0.5M",     "HK$0.5M", "92.55%", "7.45%",  "Highest pre-money · half the capital"],
+        ["Two tranches",           "HK$1.0M", "88.85%", "7.45%",  "3.75 points saved vs single HK$1.0M"],
+        ["One cheque HK$1.0M",     "HK$1.0M", "85.10%", "14.90%", "Investor crosses 10% board threshold"],
+        ["Two seeds simultaneous", "HK$1.0M", "85.10%", "7.45%",  "Neither investor crosses 10%"],
+        ["Lead + follower",        "HK$1.0M", "85.10%", "10.00%", "Lead crosses 10%"],
+    ],
+    widths=[4.2, 2.0, 2.8, 2.8, 5.8],
+    highlight_col=2,
+    shade_rows=[1]
+)
+
+callout_box(
+    doc,
+    "Structural condition:  dilution is matched to capital received. If Tranche 2 is "
+    "at the investor's discretion, it is priced after the pilot and no shares are "
+    "issued against it at Tranche 1 close.",
+    fill_color="FCE4E4",
+    text_color=RED,
+    border_color=RED,
+    size=9,
+    bold=False,
+    italic=True
+)
+
+section_heading(doc, "Two questions to ask the fund before proposing any structure")
+
+for q in [
+    "1.  What is your minimum position size?  —  Determines whether HK$0.5M tranches are available at all.",
+    "2.  Would you accept a HK$0.5M tranche now with a pre-agreed price band for a second tranche post-pilot?  —  Determines whether the tranche structure is on the table.",
+]:
+    p = doc.add_paragraph()
+    p.paragraph_format.space_after = Pt(3)
+    p.paragraph_format.left_indent = Cm(0.3)
+    r = p.add_run(q)
+    r.font.size = Pt(8.5)
+    r.bold = True
+
+# ===========================================================================
+# PAGE 3 — RETURNS, SCENARIOS & POSITIONS
+# ===========================================================================
+
+page_break(doc)
+
+page_title(
+    doc,
+    "PAGE 3  ·  RETURNS, SCENARIOS & POSITIONS",
+    "Same exit, four seed prices. Same cheque, six global scenarios."
+)
+
+section_heading(doc, "Investor Return vs Series A Price")
+
+chart3 = chart_returns()
+doc.add_picture(chart3, width=Cm(17.5))
+doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+p = doc.add_paragraph()
+p.paragraph_format.space_after = Pt(2)
+r = p.add_run(
+    "Read the chart vertically: at any Series A price, the green line (HK$5.71M seed) "
+    "delivers the highest multiple and the red line (HK$13.42M seed) the lowest. The "
+    "20× breakeven moves right as the seed price rises. That is the whole negotiation "
+    "expressed in one chart."
+)
+r.italic = True
+r.font.size = Pt(8)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+section_heading(doc, "Dilution Across Global Scenarios")
+
+chart4 = chart_scenarios()
+doc.add_picture(chart4, width=Cm(17.5))
+doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+p = doc.add_paragraph()
+p.paragraph_format.space_after = Pt(2)
+r = p.add_run(
+    "In S1 (winter) and S3 (contraction), dilution rises to 17–60% because SA falls "
+    "while the required multiple rises. The rule: raise when SA is high and M is low "
+    "(S2, S5). Use non-dilutive capital — PolyU co-investment up to HK$4M, BUD, "
+    "retained earnings — when SA is low and M is high (S1, S3)."
+)
+r.italic = True
+r.font.size = Pt(8)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+section_heading(doc, "Positions & Walk Trigger")
+
+data_table(
+    doc,
+    ["Position", "Structure", "Founder keeps", "When to use"],
+    [
+        ["Open",   "Two tranches, HK$1.0M",         "88.85%", "Pilot timeline allows the gap"],
+        ["Target", "HK$1.0M single at HK$7.80M",    "88.64%", "Series A credible at HK$176M"],
+        ["Settle", "HK$0.5M single at HK$6.21M",    "92.55%", "Runway sufficient at HK$0.5M"],
+        ["Walk",   "No priced round",               "100%",   "S1/S3, or below HK$5.71M pre"],
+    ],
+    widths=[2.0, 5.5, 3.0, 7.1],
+    highlight_col=2,
+    shade_rows=[3]
+)
+
+callout_box(
+    doc,
+    "In S1/S3, do not raise a priced round. Use the PolyU co-investment (up to HK$4M), "
+    "BUD and retained earnings. A depressed anchor persists into every subsequent round.",
+    fill_color="FCE4E4",
+    text_color=RED,
+    border_color=RED,
+    size=9,
+    bold=False,
+    italic=True
+)
+
+# ===========================================================================
+# PAGE 4 — LESSONS FROM PONGBOT & STEPOUT  (v2: positioning, chain, verification)
+# ===========================================================================
+
+page_break(doc)
+
+page_title(
+    doc,
+    "PAGE 4  ·  LESSONS FROM PONGBOT & STEPOUT",
+    "Both companies funded their step-up with the previous round. Neither "
+    "argued for it at the next one."
+)
+
+callout_box(
+    doc,
+    "A valuation step-up is not negotiated — it is purchased with the first cheque.",
+    fill_color="E2EFDA",
+    text_color=GREEN,
+    border_color=GREEN,
+    size=11,
+    bold=True
+)
+
+p = doc.add_paragraph()
+p.paragraph_format.space_after = Pt(2)
+r = p.add_run(
+    "PongBot's later round and StepOut's Pre-A were priced higher because a specific, "
+    "externally verifiable event had occurred between rounds. Each company bought the "
+    "evidence with the previous round's capital. Applied to us: Tranche 1 is not "
+    "runway — it is the budget for producing the milestone that prices Tranche 2."
+)
+r.italic = True
+r.font.size = Pt(8.5)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+section_heading(doc, "The Milestone-Gated Structure")
+
+chart5 = chart_timeline()
+doc.add_picture(chart5, width=Cm(17.5))
+doc.paragraphs[-1].alignment = WD_ALIGN_PARAGRAPH.CENTER
+
+section_heading(doc, "The Causal Chain — What Tranche 1 Buys")
+
+data_table(
+    doc,
+    ["Step", "What happens", "Cost (HK$)", "Output"],
+    [
+        ["1",
+         "Five academies' coaches capture and label kick events",
+         "63K (capture + labelling)",
+         "10,000 labelled kick events"],
+        ["2",
+         "Independent coach scores the AI kernel against ground truth",
+         "32K (benchmark assessment)",
+         "Coach-agreement benchmark (≥80%)"],
+        ["3",
+         "Each academy reviews the benchmark on its own players' data",
+         "30K (coordination, travel, review sessions)",
+         "5 signed LOIs"],
+        ["4",
+         "Y1–Y3 statements audited",
+         "80–150K",
+         "Audited track record — the SA price argument"],
+        ["5",
+         "Tranche 2 documentation",
+         "40–60K",
+         "Tranche 2 at HK$12.0M pre-money"],
+    ],
+    widths=[1.0, 6.6, 4.2, 5.7],
+    font_size=8,
+    highlight_col=3
+)
+
+p = doc.add_paragraph()
+p.paragraph_format.space_before = Pt(3)
+p.paragraph_format.space_after = Pt(3)
+r = p.add_run(
+    "Total deployed: HK$245–335K against the HK$0.5M cheque, leaving HK$165–255K "
+    "of headroom. The milestone is sized to the cheque, not the cheque to the milestone."
+)
+r.italic = True
+r.font.size = Pt(8)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+section_heading(doc, "Why the 5 LOIs Are a Consequence, Not a Sale")
+
+data_table(
+    doc,
+    ["Not", "Yes"],
+    [
+        ["A sales motion — no cold outreach, no pipeline",
+         "The academy reviews the benchmark on its own players' data"],
+        ["Dependent on finding five willing buyers",
+         "Low execution risk — the five academies already participated in the capture"],
+        ["A separate spend from the 10k kicks",
+         "The direct output of the 10k kicks — one spend, two deliverables"],
+        ["A guarantee",
+         "Contingent on one variable only: the benchmark reaching 80%"],
+    ],
+    widths=[8.5, 8.5],
+    font_size=8
+)
+
+section_heading(doc, "PongBot — What Transfers")
+
+data_table(
+    doc,
+    ["#", "What happened", "What to copy"],
+    [
+        ["1", "Two crowdfunding campaigns (PACE, then Aura), both in the millions",
+         "One validation event is an anecdote; two is a pattern"],
+        ["2", "Shipping began roughly two months after campaign close",
+         "Delivery converts a commitment into a record"],
+        ["3", "Each raise funded the next campaign",
+         "Round sized to the next de-risking event, not to abstract runway"],
+        ["4", "Product video drove customer acquisition",
+         "In sports hardware, the demonstration is the marketing"],
+    ],
+    widths=[0.8, 8.0, 8.8],
+    font_size=8
+)
+
+p = doc.add_paragraph()
+p.paragraph_format.space_before = Pt(2)
+p.paragraph_format.space_after = Pt(2)
+r = p.add_run(
+    "What does not transfer: PongBot's primary market is consumer hardware, with a "
+    "growing B2B training segment. Kung Fu AI Football is a pure B2B technology "
+    "enabler. Crowdfunding is not a natural analogue — but a named academy pilot "
+    "serves the same validation function."
+)
+r.italic = True
+r.font.size = Pt(7.5)
+r.font.color.rgb = RGBColor(0x59, 0x59, 0x59)
+
+section_heading(doc, "StepOut — What Transfers")
+
+data_table(
+    doc,
+    ["#", "What happened", "What to copy"],
+    [
+        ["1", "Seed round, then Pre-A priced on operating metrics (growth, renewal rate)",
+         "Software can step up on metrics alone — no hardware required"],
+        ["2", "Clubs and federations across multiple countries",
+         "Institutional logos are the strongest reference asset"],
+        ["3", "Volume metrics on matches analysed and players tracked",
+         "Volume metrics are the dataset story — direct analogue to the 10k kicks"],
+        ["4", "Modest absolute round sizes with meaningful percentage step-ups",
+         "A step-up is a ratio, not an absolute figure"],
+    ],
+    widths=[0.8, 8.0, 8.8],
+    font_size=8
+)
+
+section_heading(doc, "Applied to the Current Proposal")
+
+data_table(
+    doc,
+    ["Item", "Current", "Position"],
+    [
+        ["Tranche 1",
+         "HK$0.5M at HK$6.21M pre (7.45%)",
+         "Unchanged in size and price — allocated to the five-step chain above"],
+        ["Tranche 2 trigger",
+         "Post-pilot",
+         "Ten thousand labelled kicks + ≥80% benchmark + five LOIs, with a long-stop date"],
+        ["Tranche 2 price",
+         "HK$12.0M pre (4.00%)",
+         "Binding clause, agreed before Tranche 1 clears"],
+        ["Fallback if milestone missed",
+         "Undefined",
+         "Investor may decline Tranche 2; founder retains 92.55%; no shares issued "
+         "against capital not received"],
+    ],
+    widths=[3.0, 5.8, 8.7],
+    font_size=8,
+    highlight_col=2
+)
+
+callout_box(
+    doc,
+    "Both cases show the same pattern: the step-up was funded by the previous round, "
+    "not argued at the next one. The equivalent for us is the 10,000-kick dataset, "
+    "the coach benchmark, and the five LOIs that follow. That is what Tranche 1 is for.",
+    fill_color="E2EFDA",
+    text_color=GREEN,
+    border_color=GREEN,
+    size=9,
+    bold=False,
+    italic=True
+)
+
+p = doc.add_paragraph()
+p.paragraph_format.space_before = Pt(4)
+p.paragraph_format.space_after = Pt(0)
+r = p.add_run(
+    "Figure status: PongBot figures to be confirmed against pongbotsports.com "
+    "(campaign totals, shipping date, round size). StepOut figures to be confirmed "
+    "against stepout.ai (round sizes, growth rate, renewal rate, club count). "
+    "Claims that cannot be confirmed against the primary source are to be dropped "
+    "rather than footnoted — the lessons do not depend on the precise numbers."
+)
+r.italic = True
+r.font.size = Pt(7)
+r.font.color.rgb = RGBColor(0x80, 0x80, 0x80)
+
+# ===========================================================================
+# SAVE
+# ===========================================================================
+
+out = "Negotiation_Brief_4page_INTERNAL.docx"
+doc.save(out)
+print(f"Saved: {out}")
+print(f"  Page 1: equation + 20x frontier + ladder")
+print(f"  Page 2: two-tranche proposal + structures chart + questions")
+print(f"  Page 3: return matrix + scenario dilution + positions")
+print(f"  Page 4: timeline + PongBot/StepOut lessons + applied actions")
